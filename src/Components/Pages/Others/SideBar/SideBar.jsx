@@ -68,8 +68,8 @@ const SideBar = (props) => {
               <div class="text-center mb-4">
                 <div class={`text-xl text-${tcolor}-800 flex flex-col items-start justify-center relative`}>
                   <span className='flex justify-center w-full'> <span className={`text-[50px] flex justify-center py-2 text-${tcolor}-800`}><GiTakeMyMoney /></span></span>
-                  <span className='flex justify-center w-full'>{userDetails?.user_name}</span>
-                  <span className='flex justify-center w-full uppercase text-xs font-semibold'>( {userDetails?.role_name || "Role Name"} )</span>
+                  <span className='flex justify-center w-full'>{userDetails?.name}</span>
+                  <span className='flex justify-center w-full uppercase text-xs font-semibold'>( {userDetails?.role || "Role Name"} )</span>
                 </div>
                 <hr className={`my-4 bg-${bg} -700 h-[0.1rem]`} />
               </div>

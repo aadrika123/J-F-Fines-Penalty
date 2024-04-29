@@ -219,91 +219,91 @@ function Login() {
             response?.data?.data?.userDetails
           );
 
-          if (response?.data?.data?.userDetails?.user_type == "ADMIN") {
-            setLocalStorageItemStrigified("menuList", [
-              { name: "Home", path: "/home", children: [] },
-              { name: "Application List", path: "/fp-list", children: [] },
-              { name: "Search Challan", path: "/search-challan", children: [] },
-              { name: "Workflow", path: "/fp-workflow", children: [] },
-              {
-                name: "Violation Master",
-                path: "/violation-master",
-                children: [],
-              },
-              { name: "User Role Master", path: "/user-master", children: [] },
-              {
-                name: "Cash Verification",
-                path: "/cash-verification",
-                children: [],
-              },
-              {
-                name: "Reports",
-                path: "",
-                children: [
-                  {
-                    name: "Challan Generated Report",
-                    path: "/challan-generated-report",
-                  },
-                  {
-                    name: "Violation Wise Report",
-                    path: "/violation-wise-report",
-                  },
-                  { name: "Collection Report", path: "/collection-report" },
-                  { name: "Comparision Report", path: "/comparision-report" },
-                ],
-              },
-            ]);
-          }
+          // if (response?.data?.data?.userDetails?.user_type == "ADMIN") {
+          //   setLocalStorageItemStrigified("menuList", [
+          //     { name: "Home", path: "/home", children: [] },
+          //     { name: "Application List", path: "/fp-list", children: [] },
+          //     { name: "Search Challan", path: "/search-challan", children: [] },
+          //     { name: "Workflow", path: "/fp-workflow", children: [] },
+          //     {
+          //       name: "Violation Master",
+          //       path: "/violation-master",
+          //       children: [],
+          //     },
+          //     { name: "User Role Master", path: "/user-master", children: [] },
+          //     {
+          //       name: "Cash Verification",
+          //       path: "/cash-verification",
+          //       children: [],
+          //     },
+          //     {
+          //       name: "Reports",
+          //       path: "",
+          //       children: [
+          //         {
+          //           name: "Challan Generated Report",
+          //           path: "/challan-generated-report",
+          //         },
+          //         {
+          //           name: "Violation Wise Report",
+          //           path: "/violation-wise-report",
+          //         },
+          //         { name: "Collection Report", path: "/collection-report" },
+          //         { name: "Comparision Report", path: "/comparision-report" },
+          //       ],
+          //     },
+          //   ]);
+          // }
 
-          if (response?.data?.data?.userDetails?.user_type == "CO") {
-            setLocalStorageItemStrigified("menuList", [
-              { name: "Home", path: "/home", children: [] },
-              { name: "Application List", path: "/fp-list", children: [] },
-              { name: "Search Challan", path: "/search-challan", children: [] },
-              { name: "Workflow", path: "/fp-workflow", children: [] },
-            ]);
-          }
-          if (response?.data?.data?.userDetails?.user_type == "EC") {
-            setLocalStorageItemStrigified("menuList", [
-              { name: "Home", path: "/home", children: [] },
-              { name: "Application List", path: "/fp-list", children: [] },
-              { name: "Search Challan", path: "/search-challan", children: [] },
-              // {
-              //   name: "Violation Master",
-              //   path: "/violation-master",
-              //   children: [],
-              // },
-              // { name: "User Role Master", path: "/user-master", children: [] },
-              // {
-              //   name: "Cash Verification",
-              //   path: "/cash-verification",
-              //   children: [],
-              // },
-              {
-                name: "Reports",
-                path: "",
-                children: [
-                  {
-                    name: "Challan Generated Report",
-                    path: "/challan-generated-report",
-                  },
-                  {
-                    name: "Violation Wise Report",
-                    path: "/violation-wise-report",
-                  },
-                  { name: "Collection Report", path: "/collection-report" },
-                  { name: "Comparision Report", path: "/comparision-report" },
-                ],
-              },
-            ]);
-          }
-          if (response?.data?.data?.userDetails?.user_type == "JSK") {
-            setLocalStorageItemStrigified("menuList", [
-              { name: "Home", path: "/home", children: [] },
-              { name: "Application List", path: "/fp-list", children: [] },
-              { name: "Search Challan", path: "/search-challan", children: [] },
-            ]);
-          }
+          // if (response?.data?.data?.userDetails?.user_type == "CO") {
+          //   setLocalStorageItemStrigified("menuList", [
+          //     { name: "Home", path: "/home", children: [] },
+          //     { name: "Application List", path: "/fp-list", children: [] },
+          //     { name: "Search Challan", path: "/search-challan", children: [] },
+          //     { name: "Workflow", path: "/fp-workflow", children: [] },
+          //   ]);
+          // }
+          // if (response?.data?.data?.userDetails?.user_type == "EC") {
+          //   setLocalStorageItemStrigified("menuList", [
+          //     { name: "Home", path: "/home", children: [] },
+          //     { name: "Application List", path: "/fp-list", children: [] },
+          //     { name: "Search Challan", path: "/search-challan", children: [] },
+          //     // {
+          //     //   name: "Violation Master",
+          //     //   path: "/violation-master",
+          //     //   children: [],
+          //     // },
+          //     // { name: "User Role Master", path: "/user-master", children: [] },
+          //     // {
+          //     //   name: "Cash Verification",
+          //     //   path: "/cash-verification",
+          //     //   children: [],
+          //     // },
+          //     {
+          //       name: "Reports",
+          //       path: "",
+          //       children: [
+          //         {
+          //           name: "Challan Generated Report",
+          //           path: "/challan-generated-report",
+          //         },
+          //         {
+          //           name: "Violation Wise Report",
+          //           path: "/violation-wise-report",
+          //         },
+          //         { name: "Collection Report", path: "/collection-report" },
+          //         { name: "Comparision Report", path: "/comparision-report" },
+          //       ],
+          //     },
+          //   ]);
+          // }
+          // if (response?.data?.data?.userDetails?.user_type == "JSK") {
+          //   setLocalStorageItemStrigified("menuList", [
+          //     { name: "Home", path: "/home", children: [] },
+          //     { name: "Application List", path: "/fp-list", children: [] },
+          //     { name: "Search Challan", path: "/search-challan", children: [] },
+          //   ]);
+          // }
 
           fetchMenuList();
           setheartBeatCounter((prev) => prev + 1);
@@ -326,7 +326,7 @@ function Login() {
   // 3 CHANGE FOR SINGLE AUTH
   const fetchMenuList = () => {
     let requestBody = {
-      moduleId: 10,
+      moduleId: 14,
     };
     console.log("request body", requestBody);
 
@@ -340,9 +340,10 @@ function Login() {
         if (response.data.status == true) {
           // setLocalStorageItemStrigified('menuList', response?.data?.data?.permission)
           // setLocalStorageItemStrigified('userDetails', response?.data?.data?.userDetails)
-
+console.log("nbvdvbjdb",response?.data?.data?.permission)
           setmenuList(response?.data?.data?.permission);
           setuserDetails(response?.data?.data?.userDetails);
+          setLocalStorageItemStrigified("menuList",response?.data?.data?.permission)
         } else {
           console.log("false menu list => ", response?.data?.message);
           setLoaderStatus(false);

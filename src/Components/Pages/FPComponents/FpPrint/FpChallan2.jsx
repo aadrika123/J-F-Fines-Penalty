@@ -24,6 +24,7 @@ import axios from 'axios'
 import { FaRegEye } from 'react-icons/fa'
 import { BiMoney } from 'react-icons/bi'
 import { getLocalStorageItemJsonParsed } from '@/Components/Common/localstorage'
+import QrCode from './QrCode'
 
 const FpChallan2 = () => {
 
@@ -150,7 +151,7 @@ const FpChallan2 = () => {
                     </button>}
             </div>
 
-{/* <div className='bg-none w-[70%] h-[80vh] absolute flex justify-center items-center ml-[11.5vw]'>
+            {/* <div className='bg-none w-[70%] h-[80vh] absolute flex justify-center items-center ml-[11.5vw]'>
                         <div className='bg-red-100 border border-red-500 text-red-600 text-center text-2xl py-1 w-full'>Challan Expired</div>
 </div> */}
 
@@ -162,16 +163,18 @@ const FpChallan2 = () => {
                     {/* 👉 Logo & Heading 👈 */}
                     <div className=''>
                         <div className="flex flex-col justify-center items-center gap-x-4 absolute print:top-[4%] top-[5%] left-[25%] print:left-[5%]">
-                            <img src={rmclogo} alt="Logo" srcset="" className="h-16 w-16 appearance-none mix-blend-darken" />
-                            <span className="text-3xl font-bold uppercase">{challanDetails?.ulbDetails?.ulb_name}</span>
+                            {/* <img src={rmclogo} alt="Logo" srcset="" className="h-16 w-16 appearance-none mix-blend-darken" /> */}
+                            <img src={challanDetails?.ulbDetails?.ulb_logo} alt="Logo" srcset="" className="h-16 w-16 appearance-none mix-blend-darken" />
+                            {/* <span className="text-3xl font-bold uppercase">{challanDetails?.ulbDetails?.ulb_name}</span> */}
                         </div>
                         <div className='w-full flex justify-center'>
                             <div className='w-full flex justify-center mt-2'>
                                 <div className='flex flex-col items-center'>
-                                    <div className=" text-2xl underline font-bold px-8 ">कार्यालय : राँची नगर निगम, राँची</div>
-                                    <div className=" font-bold px-8 text-base mt-2">कचहरी रोड, राँची, पिन नo- 834001</div>
-                                    <div className=" font- px-8 text-sm">E-mail ID- support@ranchimunicipal.com</div>
-                                    <div className=" font- px-8 text-sm font-normal">Toll Free Number: 1800 890 4115</div>
+                                    <div className=" text-2xl underline font-bold px-8 ">कार्यालय :{challanDetails?.ulbDetails?.ulb_hindi_name} <span></span> </div>
+                                    {/* <div className=" font-bold px-8 text-base mt-2">कचहरी रोड, राँची, पिन नo- 834001</div> */}
+                                    <div className=" font-bold px-8 text-base mt-2">{challanDetails?.ulbDetails?.address}</div>
+                                    {/* <div className=" font- px-8 text-sm">E-mail ID- support@ranchimunicipal.com</div> */}
+                                    {/* <div className=" font- px-8 text-sm font-normal">Toll Free Number: 1800 890 4115</div> */}
                                     <div className=" font-semibold px-8 text-sm">{challanDetails?.challan_print_type == '1' ? '(चालान - ख)' : '(चालान - क)'} </div>
                                 </div>
                             </div>
@@ -266,7 +269,7 @@ const FpChallan2 = () => {
                             </div>
 
                             <div className="w-[50%] mt-6 flex justify-start">
-                                <div className='h-36 w-36 border border-gray-700 flex items-center justify-center'>
+                                <div className='h-36 w-64 border border-gray-700 flex items-center justify-center'>
                                     <img src={challanDetails?.geo_tagged_image} alt="violation image" srcset="" className='' />
                                 </div>
                             </div>
@@ -289,10 +292,20 @@ const FpChallan2 = () => {
                         }
                     </div>
 
+                    
+
                     {/* 👉 Bottom Contact Details 👈 */}
                     <div className='flex justify-start items-center mt-6 font-normal text-xs'>
-                        अधिक जानकारी के लिए संपर्क करे : udhd.jharkhand.gov.in, 1800 890 4115 or 0651-3500700
+                    E-mail ID- support@ranchimunicipal.com
                     </div>
+                    <div className='flex justify-start items-center mt-6 font-normal text-xs'>
+                        अधिक जानकारी के लिए संपर्क करे : <span>{challanDetails?.ulbDetails?.ulb_parent_website}</span> , {challanDetails?.ulbDetails?.mobile_no_2}
+                    </div>
+
+                    {/* <div className="w-full mt-3 ">
+                        <div className="text-sm">  <QrCode url={window.location?.host + `/fines/challan/${id}`} size={60} /></div>
+                       
+                    </div> */}
 
                     {/* 👉 Bottom Image 👈 */}
                     <div className='flex justify-center items-center mt-4'>

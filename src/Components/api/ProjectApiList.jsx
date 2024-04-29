@@ -30,7 +30,7 @@ export default function ProjectApiList() {
         //application demand detail in demand screen
         api_verifyDocuments: `${baseUrl}/workflows/document/verify-reject`,
         //application demand detail in demand screen
-        api_changePassword: `${baseUrl}/change-password`,
+        api_changePassword: `${baseUrl}/api/change-password`,
 
         // API TO EDIT ADMIN PROFILE
         api_editAdminProfile: `${baseUrl}/edit-my-profile`,
@@ -73,7 +73,8 @@ export default function ProjectApiList() {
         api_getInfractionList    : `${baseUrl}/api/fines/penalty-record/crud/active-all`,        
         
         api_getViolationList     : `${baseUrl}/api/fines/violation/crud/list`,        
-        api_getWardList          : `${baseUrl}/api/fines/ward-list`,        
+        // api_getWardList          : `${baseUrl}/api/fines/ward-list`,    //old     
+        api_getWardList          : `${baseUrl}/api/workflow/v1/crud/ward-by-ulb`,    //new     
         
         api_violationMasterList : `${baseUrl}/api/fines/violation/crud/list`,  
         api_getViolationById    : `${baseUrl}/api/fines/violation/crud/get`,

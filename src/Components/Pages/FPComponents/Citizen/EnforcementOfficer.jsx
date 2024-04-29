@@ -729,14 +729,14 @@ const EnforcementOfficer = () => {
               </>
               :
               <>
-                <div className="flex justify-end mb-2">
+                {/* <div className="flex justify-end mb-2">
                   <button
                     onClick={() => handleModal('add')}
                     className={addButton + 'capitalize flex gap-1 items-center'}
                   >
                     <CgPlayListAdd /> Add <span className="capitalize">{mType}</span>
                   </button>
-                </div>
+                </div> */}
                 <div className="bg-red-100 text-red-500 py-2 text-lg font-semibold text-center border border-red-500 drop-shadow-sm">Oops! No Data Found.</div>
               </>}
 

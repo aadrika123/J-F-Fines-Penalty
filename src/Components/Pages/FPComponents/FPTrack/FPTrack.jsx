@@ -116,7 +116,7 @@ const FPTrack = () => {
                         <FaRegEye /> Challan
                     </button>
                     
-                        {userDetails?.user_type == 'JSK' && !cell?.row?.original?.payment_status && <button
+                        {userDetails?.role == 'JSK' && !cell?.row?.original?.payment_status && <button
                             onClick={() => {
                                 navigate(`/fp-pay/${cell?.row?.original?.id}`)
                             }}
@@ -126,7 +126,7 @@ const FPTrack = () => {
                            <BiMoney /> Pay
                         </button>}
 
-                    {userDetails?.user_type == 'JSK' && cell?.row?.original?.payment_status && 
+                    {userDetails?.role == 'JSK' && cell?.row?.original?.payment_status && 
                     <button
                     onClick={() => {
                         navigate(`/fp-receipt/${cell?.row?.original?.transaction_no}`)

@@ -269,12 +269,12 @@ const ViolationIndex = () => {
             accessor: "id",
             Cell: ({ cell }) => (
                 <div className="flex flex-row flex-wrap gap-2">
-                    {/* <button
+                    <button
                         onClick={() => handleModal('edit', cell?.row?.original)}
                         className={editButton}
                     >
                         Edit
-                    </button> */}
+                    </button>
 
                     <button
                         onClick={() => handleModal('delete', cell?.row?.original?.id)}
@@ -615,9 +615,9 @@ const ViolationIndex = () => {
 
         console.log(name)
 
-        // if (name == 'violationSection') {
-        //     getViolationNameList(value)
-        // }
+        if (name == 'violationSection') {
+            getViolationNameList(value)
+        }
 
         if (name == 'department') {
             getViolationSectionList(value)

@@ -11,7 +11,7 @@ import { Route, Routes } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
 import { contextVar } from "@/Components/context/contextVar";
 import { getLocalStorageItemJsonParsed } from "@/Components/Common/localstorage";
-
+import Authentication from "./Components/Common/Authentication";
 const UserMaster = lazy(() => import("@/Components/Pages/FPComponents/UserMaster/UserMasterIndex"));
 const NewPassowd = lazy(() => import("@/Components/Pages/Others/NewPassowd"));
 const CashVerificationIndex = lazy(() => import("@/Components/Pages/FPComponents/CashVerification/CashVerificationIndex"));
@@ -90,25 +90,105 @@ function App() {
 
   // 👉 Routes Json 👈
   const allRoutes = [
-    { path: "/home", element: <FPDashboard /> }, 
-    { path: "/transfer", element: <TransferPage /> },
-    { path: "/change-password", element: <ChangePassword /> },
-    { path: "/search-challan", element: <FPTrack /> },
-    { path: "/fp-form/:id?", element: <InfractionForm /> },
+
+    {
+      path: "/home", element: <Authentication
+        hasContent={true} roles={['ADMIN', 'JSK', 'ENFORCEMENT CELL', 'COMMITTEE MEMBER']}
+      >  <FPDashboard /></Authentication>
+    },
+
+    // { path: "/transfer", element: <TransferPage /> },
+    {
+      path: "/transfer", element: <Authentication
+        hasContent={true} roles={['ADMIN']}
+      > <TransferPage /></Authentication>
+    },
+    // { path: "/change-password", element: <ChangePassword /> },
+    {
+      path: "/change-password", element: <Authentication
+        hasContent={true} roles={['ADMIN']}
+      >  <ChangePassword /></Authentication>
+    },
+    // { path: "/search-challan", element: <FPTrack /> },
+    {
+      path: "/search-challan", element: <Authentication
+        hasContent={true} roles={['ADMIN', 'JSK', 'ENFORCEMENT CELL', 'COMMITTEE MEMBER']}
+      >  <FPTrack /></Authentication>
+    },
+    // { path: "/fp-form/:id?", element: <InfractionForm /> },
+    {
+      path: "/fp-form/:id?", element: <Authentication
+        hasContent={true} roles={['ADMIN', 'JSK', 'ENFORCEMENT CELL', 'COMMITTEE MEMBER']}
+      >   <InfractionForm /></Authentication>
+    },
     { path: "/fp-details/:id", element: <FpDetails /> },
-    { path: "/violation-master", element: <ViolationIndex /> },
+    {
+      path: "/violation-master", element: <Authentication
+        hasContent={true} roles={['ADMIN']}
+      > <ViolationIndex /></Authentication>
+    },
     { path: "/fp-list", element: <FpApplicationList /> },
-    { path: "/fp-workflow", element: <FpWorkflowEntry /> },
+    // { path: "/fp-workflow", element: <FpWorkflowEntry /> },
+    {
+      path: "/fp-workflow", element: <Authentication
+        hasContent={true} roles={['COMMITTEE MEMBER', 'ADMIN']}
+      > <FpWorkflowEntry /></Authentication>
+    },
     { path: "/challan/:id", element: <FpChallan2 /> },
-    { path: "/fp-pay/:id", element: <FpPayment /> },
-    { path: "/fp-receipt/:tranNo", element: <FpReceipt /> },
-    { path: "/challan-generated-report", element: <ChallanGeneratingReport /> },
-    { path: "/violation-wise-report", element: <ViolationWiseReport /> },
-    { path: "/collection-report", element: <CollectionReport /> },
-    { path: "/comparision-report", element: <DifferenceReport /> },
-    { path: "/comparision-report/:id", element: <DifferenceDetails /> },
-    { path: "/user-master", element: <UserMaster /> },
-    { path: "/cash-verification", element: <CashVerificationIndex /> },
+    // { path: "/fp-pay/:id", element: <FpPayment /> },
+    {
+      path: "/fp-pay/:id", element: <Authentication
+        hasContent={true} roles={['JSK']}
+      >  <FpPayment /> </Authentication>
+    },
+    // { path: "/fp-receipt/:tranNo", element: <FpReceipt /> },
+    {
+      path: "/fp-receipt/:tranNo", element: <Authentication
+        hasContent={true} roles={['JSK' ,'ADMIN']}
+      >  <FpReceipt /> </Authentication>
+    },
+    // { path: "/challan-generated-report", element: <ChallanGeneratingReport /> },
+    {
+      path: "/challan-generated-report", element: <Authentication
+        hasContent={true} roles={['ENFORCEMENT CELL', 'ADMIN']}
+      >  <ChallanGeneratingReport /> </Authentication>
+    },
+    // { path: "/violation-wise-report", element: <ViolationWiseReport /> },
+    {
+      path: "/violation-wise-report", element: <Authentication
+        hasContent={true} roles={['ENFORCEMENT CELL', 'ADMIN']}
+      >   <ViolationWiseReport />  </Authentication>
+    },
+    // { path: "/collection-report", element: <CollectionReport /> },
+    {
+      path: "/collection-report", element: <Authentication
+        hasContent={true} roles={['ENFORCEMENT CELL', 'ADMIN']}
+      >  <CollectionReport />  </Authentication>
+    },
+    // { path: "/comparision-report", element: <DifferenceReport /> },
+    {
+      path: "/comparision-report", element: <Authentication
+        hasContent={true} roles={['ENFORCEMENT CELL', 'ADMIN']}
+      >  <DifferenceReport />  </Authentication>
+    },
+    // { path: "/comparision-report/:id", element: <DifferenceDetails /> },
+    {
+      path: "/comparision-report/:id", element: <Authentication
+        hasContent={true} roles={['ENFORCEMENT CELL', 'ADMIN']}
+      >  <DifferenceDetails /> </Authentication>
+    },
+    // { path: "/user-master", element: <UserMaster /> },
+    {
+      path: "/user-master", element: <Authentication
+        hasContent={true} roles={['ADMIN']}
+      > <UserMaster /> </Authentication>
+    },
+    // { path: "/cash-verification", element: <CashVerificationIndex /> },
+    {
+      path: "/cash-verification", element: <Authentication
+        hasContent={true} roles={['ENFORCEMENT CELL', 'ADMIN']}
+      > <CashVerificationIndex /> </Authentication>
+    },
   ];
   // const allRoutesNotInJSK = [
   //   { path: "/transfer", element: <TransferPage /> },
@@ -154,77 +234,78 @@ function App() {
   const userDetailsString = localStorage.getItem('userDetails');
 
   let filteredRoutes = []; // Initialize as empty array
-  
-  if (userDetailsString) {
-    try {
-      // Parse userDetailsString to convert it to a JavaScript object
-      const userDetails = JSON.parse(userDetailsString);
-      const { user_type } = userDetails;
-      console.log('User Type:', user_type);
-  
-      // Filter routes based on user_type
-      if (user_type === 'JSK') {
-        // Filter routes for admin
-        filteredRoutes = allRoutes.filter(route => route.path !== '/transfer');
-        filteredRoutes = filteredRoutes.filter(route => route.path !== '/violation-master');
-        filteredRoutes = filteredRoutes.filter(route => route.path !== '/fp-workflow');
-        filteredRoutes = filteredRoutes.filter(route => route.path !== '/challan-generated-report');
-        filteredRoutes = filteredRoutes.filter(route => route.path !== '/violation-wise-report');
-        filteredRoutes = filteredRoutes.filter(route => route.path !== '/collection-report');
-        filteredRoutes = filteredRoutes.filter(route => route.path !== '/comparision-report');
-        filteredRoutes = filteredRoutes.filter(route => route.path !== '/comparision-report/:id');
-        filteredRoutes = filteredRoutes.filter(route => route.path !== '/user-master');
-        filteredRoutes = filteredRoutes.filter(route => route.path !== '/cash-verification');
-      } 
-      else if (user_type === 'ADMIN') {
-        // Filter routes for jsk
-     
-        // filteredRoutes = allRoutes.filter(route => route.path !== '/fp-workflow');
-        filteredRoutes = allRoutes.filter(route => route.path !== '/fp-pay/:id');
-        filteredRoutes = filteredRoutes.filter(route => route.path !== '/fp-receipt/:tranNo');
-        // filteredRoutes = filteredRoutes.filter(route => route.path !== '/cash-verification');
-       
-      }
-      else if (user_type === 'EC') {
-        // Filter routes for jsk
-        filteredRoutes = allRoutes.filter(route => route.path !== '/transfer');
-        filteredRoutes = filteredRoutes.filter(route => route.path !== '/violation-master');
-        filteredRoutes = filteredRoutes.filter(route => route.path !== '/fp-workflow');
-        filteredRoutes = filteredRoutes.filter(route => route.path !== '/fp-pay/:id');
-        filteredRoutes = filteredRoutes.filter(route => route.path !== '/fp-receipt/:tranNo');
-        filteredRoutes = filteredRoutes.filter(route => route.path !== '/user-master');
-        filteredRoutes = filteredRoutes.filter(route => route.path !== '/cash-verification');
-        
-      }
-      else if (user_type === 'CO') {
-        // Filter routes for jsk
-        filteredRoutes = allRoutes.filter(route => route.path !== '/transfer');
-        filteredRoutes = filteredRoutes.filter(route => route.path !== '/violation-master');
-        filteredRoutes = filteredRoutes.filter(route => route.path !== '/fp-pay/:id');
-        filteredRoutes = filteredRoutes.filter(route => route.path !== '/fp-receipt/:tranNo');
-        filteredRoutes = filteredRoutes.filter(route => route.path !== '/challan-generated-report');
-        filteredRoutes = filteredRoutes.filter(route => route.path !== '/violation-wise-report');
-        filteredRoutes = filteredRoutes.filter(route => route.path !== '/collection-report');
-        filteredRoutes = filteredRoutes.filter(route => route.path !== '/comparision-report');
-        filteredRoutes = filteredRoutes.filter(route => route.path !== '/comparision-report/:id');
-        filteredRoutes = filteredRoutes.filter(route => route.path !== '/user-master');
-        filteredRoutes = filteredRoutes.filter(route => route.path !== '/cash-verification');
-      }
-       else {
-        // Handle condition when user_type is neither admin nor jsk
-        console.log('User type is not recognized');
-      }
-    } catch (error) {
-      // Handle error when userDetailsString is not valid JSON
-      console.error('Error parsing userDetailsString:', error);
-    }
-  } else {
-    // Handle case when userDetailsString is null
-    console.log('User details not found in localStorage');
-  }
-  
+
+  // if (userDetailsString) {
+  //   try {
+  //     // Parse userDetailsString to convert it to a JavaScript object
+  //     const userDetails = JSON.parse(userDetailsString);
+  //     const { user_type } = userDetails;
+  //     console.log('User Type:', user_type);
+  //     console.log('User Type mf:', userDetails?.role);
+
+  //     // Filter routes based on user_type
+  //     if (user_type === 'JSK') {
+  //       // Filter routes for admin
+  //       filteredRoutes = allRoutes.filter(route => route.path !== '/transfer');
+  //       // filteredRoutes = filteredRoutes.filter(route => route.path !== '/violation-master');
+  //       filteredRoutes = filteredRoutes.filter(route => route.path !== '/fp-workflow');
+  //       filteredRoutes = filteredRoutes.filter(route => route.path !== '/challan-generated-report');
+  //       filteredRoutes = filteredRoutes.filter(route => route.path !== '/violation-wise-report');
+  //       filteredRoutes = filteredRoutes.filter(route => route.path !== '/collection-report');
+  //       filteredRoutes = filteredRoutes.filter(route => route.path !== '/comparision-report');
+  //       filteredRoutes = filteredRoutes.filter(route => route.path !== '/comparision-report/:id');
+  //       filteredRoutes = filteredRoutes.filter(route => route.path !== '/user-master');
+  //       filteredRoutes = filteredRoutes.filter(route => route.path !== '/cash-verification');
+  //     } 
+  //     else if (user_type === 'ADMIN') {
+  //       // Filter routes for jsk
+
+  //       // filteredRoutes = allRoutes.filter(route => route.path !== '/fp-workflow');
+  //       filteredRoutes = allRoutes.filter(route => route.path !== '/fp-pay/:id');
+  //       // filteredRoutes = filteredRoutes.filter(route => route.path !== '/fp-receipt/:tranNo');  // fp reciept unlocked from adminn role 
+  //       // filteredRoutes = filteredRoutes.filter(route => route.path !== '/cash-verification');
+
+  //     }
+  //     else if (user_type === 'EC') {
+  //       // Filter routes for jsk
+  //       filteredRoutes = allRoutes.filter(route => route.path !== '/transfer');
+  //       filteredRoutes = filteredRoutes.filter(route => route.path !== '/violation-master');
+  //       filteredRoutes = filteredRoutes.filter(route => route.path !== '/fp-workflow');
+  //       filteredRoutes = filteredRoutes.filter(route => route.path !== '/fp-pay/:id');
+  //       filteredRoutes = filteredRoutes.filter(route => route.path !== '/fp-receipt/:tranNo');
+  //       filteredRoutes = filteredRoutes.filter(route => route.path !== '/user-master');
+  //       filteredRoutes = filteredRoutes.filter(route => route.path !== '/cash-verification');
+
+  //     }
+  //     else if (user_type === 'CO') {
+  //       // Filter routes for jsk
+  //       filteredRoutes = allRoutes.filter(route => route.path !== '/transfer');
+  //       filteredRoutes = filteredRoutes.filter(route => route.path !== '/violation-master');
+  //       filteredRoutes = filteredRoutes.filter(route => route.path !== '/fp-pay/:id');
+  //       filteredRoutes = filteredRoutes.filter(route => route.path !== '/fp-receipt/:tranNo');
+  //       filteredRoutes = filteredRoutes.filter(route => route.path !== '/challan-generated-report');
+  //       filteredRoutes = filteredRoutes.filter(route => route.path !== '/violation-wise-report');
+  //       filteredRoutes = filteredRoutes.filter(route => route.path !== '/collection-report');
+  //       filteredRoutes = filteredRoutes.filter(route => route.path !== '/comparision-report');
+  //       filteredRoutes = filteredRoutes.filter(route => route.path !== '/comparision-report/:id');
+  //       filteredRoutes = filteredRoutes.filter(route => route.path !== '/user-master');
+  //       filteredRoutes = filteredRoutes.filter(route => route.path !== '/cash-verification');
+  //     }
+  //      else {
+  //       // Handle condition when user_type is neither admin nor jsk
+  //       console.log('User type is not recognized');
+  //     }
+  //   } catch (error) {
+  //     // Handle error when userDetailsString is not valid JSON
+  //     console.error('Error parsing userDetailsString:', error);
+  //   }
+  // } else {
+  //   // Handle case when userDetailsString is null
+  //   console.log('User details not found in localStorage');
+  // }
+
   // Now use filteredRoutes in your application for routing
-  
+
   return (
     <>
       <Toaster />
@@ -235,7 +316,7 @@ function App() {
           {/* ════════════════════║ THIS BLOCK IS FOR CITIZEN ║═════════════════════════   */}
           <Route element={<CitizenRoutes />}>
 
-            <Route path="/" element={<CitizenIndex />} />
+            {/* <Route path="/" element={<CitizenIndex />} /> */}
 
             <Route element={<BackButton />}>
               <Route path="/search-challan/direct" element={<FPTrackDirect />} />
@@ -255,20 +336,20 @@ function App() {
 
 
 
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Login />} />
 
 
-          {/* <Route element={<ProtectedRoutes />}>
+          <Route element={<ProtectedRoutes />}>
             {allRoutes?.map((elem, index) => (
               <Route key={index} path={elem?.path} element={elem?.element} />
             ))}
-          </Route> */}
+          </Route>
 
-            <Route element={<ProtectedRoutes />}>
+          {/* <Route element={<ProtectedRoutes />}>
             {filteredRoutes.map((elem, index) => (
               <Route key={index} path={elem.path} element={elem.element} />
             ))}
-          </Route>
+          </Route> */}
 
           <Route path="*" element={<ErrorPage />} />
         </Routes>
