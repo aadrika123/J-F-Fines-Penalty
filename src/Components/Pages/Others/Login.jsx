@@ -307,8 +307,8 @@ function Login() {
 
           fetchMenuList();
           setheartBeatCounter((prev) => prev + 1);
-          navigate("/home"); //navigate to home page after login
-
+          // navigate("/home"); //navigate to home page after login
+          // window.location.href = '/fines/home';
           toast.success("Login Successfull");
         } else {
           console.log("false...");
@@ -344,6 +344,7 @@ console.log("nbvdvbjdb",response?.data?.data?.permission)
           setmenuList(response?.data?.data?.permission);
           setuserDetails(response?.data?.data?.userDetails);
           setLocalStorageItemStrigified("menuList",response?.data?.data?.permission)
+          window.location.href="/fines/home"
         } else {
           console.log("false menu list => ", response?.data?.message);
           setLoaderStatus(false);

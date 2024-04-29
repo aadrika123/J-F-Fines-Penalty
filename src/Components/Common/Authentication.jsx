@@ -3,8 +3,8 @@ import React from 'react';
 const getRole = localStorage.getItem('userDetails');
 
 export default function Authentication({ hasContent, roles, children }) {
-  const isRoleArray = JSON.parse(getRole)?.role
-  const isRole = roles?.some((role) => isRoleArray.includes(role));
+  const isRoleArray = JSON.parse(getRole)?.role || []; 
+  const isRole = roles?.some((role) => isRoleArray?.includes(role));
   console.log(isRole)
   if (!isRole) {
     return hasContent ? (
