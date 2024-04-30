@@ -162,7 +162,7 @@ const FpChallan2 = () => {
 
                     {/* 👉 Logo & Heading 👈 */}
                     <div className=''>
-                        <div className="flex flex-col justify-center items-center gap-x-4 absolute print:top-[4%] top-[5%] left-[25%] print:left-[5%]">
+                        <div className="flex justify-center items-center w-full h-20">
                             {/* <img src={rmclogo} alt="Logo" srcset="" className="h-16 w-16 appearance-none mix-blend-darken" /> */}
                             <img src={challanDetails?.ulbDetails?.ulb_logo} alt="Logo" srcset="" className="h-16 w-16 appearance-none mix-blend-darken" />
                             {/* <span className="text-3xl font-bold uppercase">{challanDetails?.ulbDetails?.ulb_name}</span> */}
@@ -172,7 +172,7 @@ const FpChallan2 = () => {
                                 <div className='flex flex-col items-center'>
                                     <div className=" text-2xl underline font-bold px-8 ">कार्यालय :{challanDetails?.ulbDetails?.ulb_hindi_name} <span></span> </div>
                                     {/* <div className=" font-bold px-8 text-base mt-2">कचहरी रोड, राँची, पिन नo- 834001</div> */}
-                                    <div className=" font-bold px-8 text-base mt-2">{challanDetails?.ulbDetails?.address}</div>
+                                    <div className=" font-bold px-8 text-base mt-2">{challanDetails?.ulbDetails?.hindi_address}</div>
                                     {/* <div className=" font- px-8 text-sm">E-mail ID- support@ranchimunicipal.com</div> */}
                                     {/* <div className=" font- px-8 text-sm font-normal">Toll Free Number: 1800 890 4115</div> */}
                                     <div className=" font-semibold px-8 text-sm">{challanDetails?.challan_print_type == '1' ? '(चालान - ख)' : '(चालान - क)'} </div>
@@ -296,10 +296,10 @@ const FpChallan2 = () => {
 
                     {/* 👉 Bottom Contact Details 👈 */}
                     <div className='flex justify-start items-center mt-6 font-normal text-xs'>
-                    E-mail ID- support@ranchimunicipal.com
+                    E-mail ID- {challanDetails?.ulbDetails?.email}
                     </div>
                     <div className='flex justify-start items-center mt-6 font-normal text-xs'>
-                        अधिक जानकारी के लिए संपर्क करे : <span>{challanDetails?.ulbDetails?.ulb_parent_website}</span> , {challanDetails?.ulbDetails?.mobile_no_2}
+                        अधिक जानकारी के लिए संपर्क करे : <span>{challanDetails?.ulbDetails?.current_website}</span> , {challanDetails?.ulbDetails?.mobile_no_2}
                     </div>
 
                     {/* <div className="w-full mt-3 ">

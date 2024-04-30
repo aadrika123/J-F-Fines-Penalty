@@ -100,7 +100,7 @@ const FpReceipt = () => {
 
                     {/* 👉 Logo & Heading 👈 */}
                     <div className=''>
-                        <div className="flex flex-col justify-center items-center gap-x-4 md:absolute print:top-[4%] top-[5%] left-[25%] print:left-[5%]">
+                        <div className="flex justify-center items-center w-full h-20">
                             {/* <img src={rmclogo} alt="Logo" srcset="" className="h-16 w-16 appearance-none mix-blend-darken" /> */}
                             <img src={receiptDetails?.ulbDetails?.ulb_logo} alt="Logo" srcset="" className="h-16 w-16 appearance-none mix-blend-darken" />
                             {/* <span className="text-3xl font-bold uppercase">{receiptDetails?.ulbDetails?.ulb_name}</span> */}
@@ -110,7 +110,7 @@ const FpReceipt = () => {
                                 <div className='flex flex-col items-center'>
                                     <div className=" text-xl md:text-2xl underline font-bold px-2 md:px-8 ">कार्यालय : {receiptDetails?.ulbDetails?.ulb_hindi_name}</div>
                                     {/* <div className=" font-bold px-2 md:px-8 text-base mt-2">कचहरी रोड, राँची, पिन नo- 834001</div> */}
-                                    <div className=" font-bold px-2 md:px-8 text-base mt-2">{receiptDetails?.ulbDetails?.address}</div>
+                                    <div className=" font-bold px-2 md:px-8 text-base mt-2">{receiptDetails?.ulbDetails?.hindi_address}</div>
                                     {/* <div className=" font- px-2 md:px-8 text-sm">E-mail ID- support@ranchimunicipal.com</div> */}
                                     {/* <div className=" font- px-2 md:px-8 text-sm font-normal">Toll Free Number: 1800 890 4115</div> */}
                                 </div>
@@ -202,10 +202,10 @@ const FpReceipt = () => {
 
                     {/* 👉 Bottom Contact Details 👈 */}
                     <div className='flex justify-start items-center mt-6 font-normal text-xs'>
-                    E-mail ID- support@ranchimunicipal.com
+                    E-mail ID- {receiptDetails?.ulbDetails?.email}
                     </div>
                     <div className='flex justify-start items-center mt-6 font-normal text-xs'>
-                        अधिक जानकारी के लिए संपर्क करे : udhd.jharkhand.gov.in, 1800 890 4115 or 0651-3500700
+                        अधिक जानकारी के लिए संपर्क करे :{receiptDetails?.ulbDetails?.current_website}, 1800 890 4115 or 0651-3500700
                     </div>
 
                     {/* 👉 Bottom Image 👈 */}

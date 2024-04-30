@@ -106,7 +106,7 @@ function App() {
     // { path: "/change-password", element: <ChangePassword /> },
     {
       path: "/change-password", element: <Authentication
-        hasContent={true} roles={['ADMIN']}
+        hasContent={true} roles={['ADMIN', 'JSK', 'ENFORCEMENT CELL', 'COMMITTEE MEMBER']}
       >  <ChangePassword /></Authentication>
     },
     // { path: "/search-challan", element: <FPTrack /> },
