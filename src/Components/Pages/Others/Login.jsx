@@ -23,92 +23,62 @@ import {
 import { contextVar } from "@/Components/context/contextVar";
 import { RxCross2 } from "react-icons/rx";
 import apk from "@/Components/assets/download.png";
-// const [captcha, setCaptcha] = useState(generateCaptcha());
+import UseCaptchaGenerator from "@/hooks/UseCaptchaGenerator";
+
 const { api_login, api_getFreeMenuList } = ProjectApiList();
 
-// const validationSchema = Yup.object({
-//   username: Yup.string().required("Enter Username"),
-//   password: Yup.string().required("Enter Password"),
-//   userAnswer: Yup.string().required("Enter userAnswer"),
-//   captcha: Yup.string().required("Enter captcha"),
-// });
+
 
 function Login() {
   const { setmenuList, setuserDetails, setheartBeatCounter } =
-    useContext(contextVar);
+  useContext(contextVar);
   const [loaderStatus, setLoaderStatus] = useState(false);
   const [manualDialogStatus, setmanualDialogStatus] = useState(false);
   const userManualModalRef = useRef();
+  const {catptchaTextField,dataUrl,verifyCaptcha,newGeneratedCaptcha }= UseCaptchaGenerator();
 
   const modalRef = useRef();
 
-  // const formik = useFormik({
-  //   initialValues: {
-  //     username: "",
-  //     password: "",
-  //     captcha: "",
-  //   },
-  //   onSubmit: (values) => {
-  //     authUser();
-  //   },
-  //   validationSchema,
-  // });
-
-  const generateCaptcha = () => {
-    const num1 = Math.floor(Math.random() * 10) + 1;
-    const num2 = Math.floor(Math.random() * 10) + 1;
-    const operator = ['+', '-', '*'][Math.floor(Math.random() * 3)];
-    const expression = `${num1} ${operator} ${num2}`;
-    const answer = eval(expression);
-    return { expression, answer };
-  };
-
-  const [captcha, setCaptcha] = useState(generateCaptcha());
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
   const formik = useFormik({
     initialValues: {
-      userAnswer: '',
+      // userAnswer: '',
+      captcha: '',
       username: '',
       password: '',
     },
     validationSchema: Yup.object({
-      userAnswer: Yup.string() // Use string instead of number
-        .required('Please solve the captcha.')
-        .test(
-          'correctAnswer',
-          'Incorrect answer. Please try again.',
-          (value) => !isFormSubmitted || value === captcha.answer.toString()
-        ),
+      captcha: Yup.string() // Use string instead of number
+        .required('Required'),
       username: Yup.string().required('Enter Username'),
       password: Yup.string().required('Enter Password'),
     }),
-    onSubmit: async (values) => {
+    onSubmit: async (values,{resetForm}) => {
       setIsFormSubmitted(true);
-  
-      // Check if the captcha answer is correct before calling authUser()
-      if (values.userAnswer === captcha.answer.toString()) {
+       const isvalidcaptcha=verifyCaptcha(values?.captcha,resetForm)
+       if (isvalidcaptcha){
         try {
           // Call your authentication function (authUser()) here
           await authUser(values.username, values.password);
-  
           console.log('Form submitted:', values);
-          setCaptcha(generateCaptcha());
           setIsFormSubmitted(false);
-          formik.resetForm();
+          
         } catch (error) {
           // Handle authentication error if needed
           console.error('Authentication failed:', error);
           setIsFormSubmitted(false); // Reset the form submission status on authentication failure
         }
+       }
+      else{
+        // alert("Invalid captcha")
+        toast.error('Invalid captcha');
       }
+     
     },
   });
   
-  useEffect(() => {
-    setIsFormSubmitted(false);
-    setCaptcha(generateCaptcha());
-  }, []);
+
   
 
 
@@ -201,7 +171,7 @@ function Login() {
   };
 
   //authUser function which authenticate user credentials
-  const authUser = (e) => {
+  const authUser = async (e) => {
     setLoaderStatus(true);
     let requestBody = {
       email: formik.values.username,
@@ -218,6 +188,7 @@ function Login() {
             "userDetails",
             response?.data?.data?.userDetails
           );
+          formik.resetForm();
 
           // if (response?.data?.data?.userDetails?.user_type == "ADMIN") {
           //   setLocalStorageItemStrigified("menuList", [
@@ -547,7 +518,7 @@ console.log("nbvdvbjdb",response?.data?.data?.permission)
                 {/* login form */}
 
 
-                <div className="max-w-full w-full px-2 sm:px-12 lg:pr-20 mb-10 lg:mb-0">
+                <div className="max-w-full w-full px-2 sm:px-12 lg:px-0 lg:pr-20 mb-10 lg:mb-0">
                   <div className="relative">
                     <div className="p-6 sm:py-8 sm:px-12 rounded-lg bg-white darks:bg-gray-800 shadow-xl">
                       <form onSubmit={formik.handleSubmit}>
@@ -605,7 +576,7 @@ console.log("nbvdvbjdb",response?.data?.data?.permission)
                         </div>
 
                         {/* Captcha field */}
-                        <div className="mb-6">
+                        {/* <div className="mb-6">
                           <label htmlFor="userAnswer" className="block text-gray-700 text-sm font-bold mb-2">
                             Solve the Captcha: {captcha.expression} =
                           </label>
@@ -621,7 +592,23 @@ console.log("nbvdvbjdb",response?.data?.data?.permission)
                           {formik.touched.userAnswer && formik.errors.userAnswer && (
                             <div className="text-red-600 text-sm mt-1">{formik.errors.userAnswer}</div>
                           )}
+                        </div> */}
+                        <div className="mb-6">
+                          <div className="flex justify-between items-center">
+                             <div className="bg-gray-400 px-3 py-1 rounded-sm">
+                              <img src={dataUrl}/>
+                             </div>
+                             <div>
+                              <button type="button" onClick={newGeneratedCaptcha} className="text-xs text-blue-400">Reload Captcha</button>
+                             </div>
+                          </div>
+                          <div className="mt-4">
+                          {catptchaTextField(formik)}
+                          </div>
+                         
+                         
                         </div>
+
 
 
 
