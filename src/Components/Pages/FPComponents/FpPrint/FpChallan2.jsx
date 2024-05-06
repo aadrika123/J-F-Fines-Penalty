@@ -268,9 +268,14 @@ const FpChallan2 = () => {
                                 </div>
                             </div>
 
-                            <div className="w-[50%] mt-6 flex justify-start">
+                            {/* <div className="w-[50%] mt-6 flex justify-start">
                                 <div className='h-36 w-64 border border-gray-700 flex items-center justify-center'>
                                     <img src={challanDetails?.geo_tagged_image} alt="violation image" srcset="" className='' />
+                                </div>
+                            </div> */}
+                            <div className="w-[50%] mt-6 flex justify-start">
+                                <div className=' flex items-center justify-center'>
+                                    <img src={challanDetails?.geo_tagged_image} alt="violation image" srcset="" className='h-36 w-60' />
                                 </div>
                             </div>
                             <div className="w-[50%] mt-6 flex justify-end items-center">
@@ -292,11 +297,11 @@ const FpChallan2 = () => {
                         }
                     </div>
 
-                    
+
 
                     {/* 👉 Bottom Contact Details 👈 */}
                     <div className='flex justify-start items-center mt-6 font-normal text-xs'>
-                    E-mail ID- {challanDetails?.ulbDetails?.email}
+                        E-mail ID- {challanDetails?.ulbDetails?.email}
                     </div>
                     <div className='flex justify-start items-center mt-6 font-normal text-xs'>
                         अधिक जानकारी के लिए संपर्क करे : <span>{challanDetails?.ulbDetails?.current_website}</span> , {challanDetails?.ulbDetails?.mobile_no_2}

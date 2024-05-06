@@ -285,12 +285,16 @@ function Login() {
           console.log("false...");
           setLoaderStatus(false);
           toast.error(response?.data?.message);
+          newGeneratedCaptcha();
+          formik?.setFieldValue('captcha','');
         }
       })
       .catch(function (error) {
         setLoaderStatus(false);
         console.log("--2--login error...", error);
         toast.error("Server Error");
+        newGeneratedCaptcha();
+        formik?.setFieldValue('captcha','');
       });
   };
 

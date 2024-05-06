@@ -268,9 +268,14 @@ const FpChallan2Direct = () => {
                                         </div>
                                     </div>
 
-                                    <div className="w-[50%] mt-6 flex justify-start">
+                                    {/* <div className="w-[50%] mt-6 flex justify-start">
                                         <div className='h-36 w-36 border border-gray-700 flex items-center justify-center'>
                                             <img src={challanDetails?.geo_tagged_image} alt="violation image" srcset="" className='' />
+                                        </div>
+                                    </div> */}
+                                    <div className="w-[50%] mt-6 flex justify-start">
+                                        <div className=' flex items-center justify-center'>
+                                            <img src={challanDetails?.geo_tagged_image} alt="violation image" srcset="" className='h-36 w-60' />
                                         </div>
                                     </div>
                                     <div className="w-[50%] mt-6 flex justify-end items-center">
