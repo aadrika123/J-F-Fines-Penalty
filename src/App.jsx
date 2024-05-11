@@ -144,7 +144,7 @@ function App() {
     // { path: "/fp-receipt/:tranNo", element: <FpReceipt /> },
     {
       path: "/fp-receipt/:tranNo", element: <Authentication
-        hasContent={true} roles={['JSK' ,'ADMIN']}
+        hasContent={true} roles={['JSK' ,'ADMIN','COMMITTEE MEMBER']}
       >  <FpReceipt /> </Authentication>
     },
     // { path: "/challan-generated-report", element: <ChallanGeneratingReport /> },
