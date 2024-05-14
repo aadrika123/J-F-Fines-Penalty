@@ -93,9 +93,9 @@ const InfractionForm = (props) => {
     const addressForm = [
         { title: "", key: "streetAddress1", type: 'text', width: 'md:w-[45%] w-full', hint: type == 'edit' ? 'NA' : "Enter Street Address 1" },
         // { title: "", key: "streetAddress2", type: 'text', width: 'md:w-[45%] w-full', hint: type == 'edit' ? 'NA' : "Enter Street Address 2" },
-        { title: "", key: "city", type: 'text', width: 'auto', hint: type == 'edit' ? 'NA' : "Enter City" },
-        { title: "", key: "region", type: 'text', width: 'auto', hint: type == 'edit' ? 'NA' : "Enter Region" },
-        { title: "", key: "pincode", type: 'text', width: 'auto', hint: type == 'edit' ? 'NA' : "Enter Postal/Zip Code" },
+        { title: "City", key: "city", type: 'text', width: 'auto', hint: type == 'edit' ? 'NA' : "Enter City" },
+        { title: "Region", key: "region", type: 'text', width: 'auto', hint: type == 'edit' ? 'NA' : "Enter Region" },
+        { title: "Pincode", key: "pincode", type: 'text', width: 'auto', hint: type == 'edit' ? 'NA' : "Enter Postal/Zip Code" },
     ]
 
     // 👉 Violation Details Fields JSON👈

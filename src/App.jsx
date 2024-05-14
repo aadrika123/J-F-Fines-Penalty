@@ -93,7 +93,7 @@ function App() {
 
     {
       path: "/home", element: <Authentication
-        hasContent={true} roles={['ADMIN', 'JSK', 'ENFORCEMENT CELL', 'COMMITTEE MEMBER']}
+        hasContent={true} roles={['ADMIN', 'JSK', 'ENFORCEMENT CELL', 'COMMITTEE MEMBER','ACCOUNTANT']}
       >  <FPDashboard /></Authentication>
     },
 
@@ -144,7 +144,7 @@ function App() {
     // { path: "/fp-receipt/:tranNo", element: <FpReceipt /> },
     {
       path: "/fp-receipt/:tranNo", element: <Authentication
-        hasContent={true} roles={['JSK' ,'ADMIN','COMMITTEE MEMBER']}
+        hasContent={true} roles={['JSK' ,'ADMIN','COMMITTEE MEMBER','ENFORCEMENT CELL']}
       >  <FpReceipt /> </Authentication>
     },
     // { path: "/challan-generated-report", element: <ChallanGeneratingReport /> },
@@ -186,7 +186,7 @@ function App() {
     // { path: "/cash-verification", element: <CashVerificationIndex /> },
     {
       path: "/cash-verification", element: <Authentication
-        hasContent={true} roles={['ENFORCEMENT CELL', 'ADMIN']}
+        hasContent={true} roles={['ENFORCEMENT CELL', 'ADMIN','ACCOUNTANT']}
       > <CashVerificationIndex /> </Authentication>
     },
   ];
@@ -312,7 +312,7 @@ function App() {
 
       <contextVar.Provider value={contextData}>
         <Routes>
-
+        <Route path="/fp-receipt/:tranNo/direct" element={<FpReceipt />} />
           {/* ════════════════════║ THIS BLOCK IS FOR CITIZEN ║═════════════════════════   */}
           <Route element={<CitizenRoutes />}>
 
@@ -330,7 +330,7 @@ function App() {
 
             <Route path="/set-password/:token?/:id?" element={<NewPassowd />} />
             <Route path="/challan/:id/direct" element={<FpChallan2 />} />
-            <Route path="/fp-receipt/:tranNo/direct" element={<FpReceipt />} />
+            {/* <Route path="/fp-receipt/:tranNo/direct" element={<FpReceipt />} /> */}
 
           </Route>
 

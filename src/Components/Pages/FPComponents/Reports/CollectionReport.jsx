@@ -12,7 +12,7 @@
 import React from 'react'
 import ListTableConnect from "@/Components/Common/ListTableBP/ListTableConnect";
 import { useFormik } from "formik";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { RiFilter2Line } from "react-icons/ri";
 import { RotatingLines } from "react-loader-spinner";
 import * as yup from 'yup'
@@ -25,7 +25,8 @@ const CollectionReport = () => {
 
     // 👉 Setting title 👈
     useSetTitle("Collection Report")
-
+    const [dataList, setdataList] = useState(null)
+    const [totalAmount, settotalAmount] = useState(0)
     // 👉 API constant 👈
     const { api_CollectionReport } = ProjectApiList()
 
@@ -79,7 +80,7 @@ const CollectionReport = () => {
                 <div className='underline cursor-pointer' onClick={() => cell.row.original?.tran_no && navigate(`/fp-receipt/${cell.row.original?.tran_no}`)}>
                     {nullToNA(cell.row.original?.tran_no)}
                 </div>
-                )
+            )
         },
         {
             Header: "Transaction Date",
@@ -130,10 +131,10 @@ const CollectionReport = () => {
                 {type != 'select' && type != 'file' && <input {...formik.getFieldProps(key)} type={type} className={inputStyle + ` ${(formik.touched[key] && formik.errors[key]) ? ' border-red-200 placeholder:text-red-400 ' : ' focus:border-zinc-300 border-zinc-200'}`} name={key} id="" placeholder={hint} />}
                 {type == 'select' && <select {...formik.getFieldProps(key)} className={inputStyle + ` ${(formik.touched[key] && formik.errors[key]) ? ' border-red-200 placeholder:text-red-400 text-red-400' : ' focus:border-zinc-300 border-zinc-200 '}`}>
 
-                                <option value="">All</option>
-                                {
-                                    options?.map((elem) => <option className='' value={elem[okey]}>{elem[ovalue]}</option>)
-                                }
+                    <option value="">All</option>
+                    {
+                        options?.map((elem) => <option className='' value={elem[okey]}>{elem[ovalue]}</option>)
+                    }
 
                 </select>}
             </div>
@@ -169,6 +170,8 @@ const CollectionReport = () => {
         },
     });
 
+
+
     // 👉 Function 2 👈
     const fetchData = (data) => {
         setrequestBody({
@@ -180,6 +183,13 @@ const CollectionReport = () => {
         setchangeData(prev => prev + 1)
 
     };
+
+    console.log('getting data => ', dataList)
+
+    useEffect(() => {
+        settotalAmount(dataList?.total_amount)
+
+    }, [dataList, changeData])
 
     return (
         <>
@@ -231,14 +241,43 @@ const CollectionReport = () => {
             </form>
 
             {/* 👉 Table 👈 */}
-            {Object.keys(requestBody).length !== 0 && <ListTableConnect
+            {Object.keys(requestBody).length !== 0 && (
+                <div className='relative'>
+                    <div className='absolute top-0 grid grid-cols-3 right-0'>
+
+                        <div>
+                            Total Amount:<span className="font-semibold">{indianAmount(totalAmount)}</span>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            )}
+            <ListTableConnect
+                getData={true}
                 api={api_CollectionReport} // sending api
                 columns={columns} // sending column
                 requestBody={requestBody}
+                allData={(data) => setdataList(data)}
+
                 changeData={changeData} // sending body
                 search={false}
                 loader={(status) => setloader(status)}
-            />}
+            />
+
+
+
+
+            {/* {Object.keys(requestBody).length !== 0 && <ListTableConnect
+                api={api_CollectionReport} // sending api
+                columns={columns} // sending column
+                requestBody={requestBody}
+                allData={(data) => setdataList(data)}
+                changeData={changeData} // sending body
+                search={false}
+                loader={(status) => setloader(status)}
+            />} */}
 
         </>
     );
