@@ -185,6 +185,10 @@ const CollectionReport = () => {
     };
 
     console.log('getting data => ', dataList)
+   
+    useEffect(() => {
+        fetchData(initialValues);
+    }, []); 
 
     useEffect(() => {
         settotalAmount(dataList?.total_amount)
