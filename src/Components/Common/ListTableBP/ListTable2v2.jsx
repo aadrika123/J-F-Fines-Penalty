@@ -21,6 +21,46 @@ function ListTable2(props) {
     const [perPageC, setperPageC] = useState(10)
     const [pageNo, setpageNo] = useState(0)
 
+    const printTable = () => {
+        const printWindow = window.open('', '_blank');
+        printWindow.document.write('<html><head><title>Print</title>');
+        printWindow.document.write('<style>');
+        printWindow.document.write('table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }');
+        printWindow.document.write('th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }');
+        printWindow.document.write('th { background-color: #f2f2f2; }');
+        printWindow.document.write('tr:nth-child(even) { background-color: #f2f2f2;; }');
+        printWindow.document.write('</style></head><body>');
+
+        printWindow.document.write('<table>');
+
+        // Header row
+        printWindow.document.write('<tr>');
+        headerGroups[0]?.headers.forEach(column => {
+            if (column.render('Header') !== 'Action') {
+                printWindow.document.write('<th>' + column.render('Header') + '</th>');
+            }
+        });
+        printWindow.document.write('</tr>');
+
+        rows.forEach((row, rowIndex) => {
+            printWindow.document.write('<tr>');
+            row?.cells?.forEach((cell, cellIndex) => {
+                if (cellIndex === 0) {
+                    printWindow.document.write('<td>' + (rowIndex + 1) + '</td>');
+                } else if (cell.column.render('Header') !== 'Action') {
+                    printWindow.document.write('<td>' + row?.original[cell.column.id] + '</td>');
+                }
+            });
+            printWindow.document.write('</tr>');
+        });
+
+        printWindow.document.write('</table>');
+
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.print();
+    };
+
     useEffect(() => {
         setpageNo(0)
     }, [props?.totalCount])
@@ -78,24 +118,29 @@ function ListTable2(props) {
         }
 
     }
+  
+
 
     return (
         <>
 
 
-            {props?.exportStatus !==false && (props?.search == false ?
+            {props?.exportStatus !== false && (props?.search == false ?
                 <div className="absolute -mt-[1vh] right-[3.3vw] flex items-center gap-2">
                     <div className='flex-initial ml-2'><button className='text-sm hover:bg-slate-500 px-3 pr-3  shadow-lg rounded py-0.5 border border-slate-500 text-slate-500 hover:text-white hover:shadow-2xl  text-center relative' onMouseEnter={() => setbounce('')} onMouseLeave={() => setbounce('hidden')} onClick={() => props?.exportDataF('csv')}>
                         CSV
                         <div className={bounce + ' absolute h-full top-3 text-sm left-0 text-center animate-bounce'}><AiOutlineArrowDown /></div></button></div>
-                        {/* <button onClick={() => props?.exportDataF('excel')} className='text-sm hover:bg-slate-500 px-3 pr-3  shadow-lg rounded py-0.5 border border-slate-500 text-slate-500 hover:text-white hover:shadow-2xl text-center relative'>Excel</button> */}
-                        {/* <button onClick={() => props?.exportDataF('pdf')} className='text-sm hover:bg-slate-500 px-3 pr-3  shadow-lg rounded py-0.5 border border-slate-500 text-slate-500 hover:text-white hover:shadow-2xl text-center relative'>PDF</button> */}
+                     <button onClick={() => props?.exportDataF('excel')} className='text-sm hover:bg-slate-500 px-3 pr-3  shadow-lg rounded py-0.5 border border-slate-500 text-slate-500 hover:text-white hover:shadow-2xl text-center relative'>Excel</button>
+                        {/* <button onClick={() => props?.exportDataF('pdf')} className='text-sm hover:bg-slate-500 px-3 pr-3  shadow-lg rounded py-0.5 border border-slate-500 text-slate-500 hover:text-white hover:shadow-2xl text-center relative'>PDF</button>  */}
+
+                    {/* <button  onClick={() => props?.exportDataF('csv')} className='text-sm hover:bg-slate-500 px-3 pr-3  shadow-lg rounded py-0.5 border border-slate-500 text-slate-500 hover:text-white hover:shadow-2xl text-center relative'>Excel</button> */}
+                    <button onClick={printTable} className='text-sm hover:bg-red-500 px-3 pr-3  shadow-lg rounded py-0.5 border border-slate-500 text-slate-500 hover:text-white hover:shadow-2xl text-center relative'>PDF</button>
 
                 </div>
                 :
                 <div className="flex mb-2 pb-2">
                     <div className='flex-initial opacity-50'><GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} /></div>
-                    <div className='flex-initial ml-2'><button  className='text-sm hover:bg-slate-500 px-3 pr-3  shadow-lg rounded py-1 border border-slate-500 text-slate-500 hover:text-white hover:shadow-2xl text-center relative' onMouseEnter={() => setbounce('')} onMouseLeave={() => setbounce('hidden')} onClick={() => props?.exportDataF('csv')}>
+                    <div className='flex-initial ml-2'><button className='text-sm hover:bg-slate-500 px-3 pr-3  shadow-lg rounded py-1 border border-slate-500 text-slate-500 hover:text-white hover:shadow-2xl text-center relative' onMouseEnter={() => setbounce('')} onMouseLeave={() => setbounce('hidden')} onClick={() => props?.exportDataF('csv')}>
                         Export
                         <div className={bounce + ' absolute h-full top-3 text-sm left-0 text-center animate-bounce'}><AiOutlineArrowDown /></div></button></div>
                     <div className='flex-1'>{props.children}</div>

@@ -24,8 +24,8 @@ import { CSVDownload } from 'react-csv'
 import axios from 'axios'
 import ShimmerEffectInline from '@/Components/Common/Loaders/ShimmerEffectInline'
 import AxiosInterceptors from '../AxiosInterceptors'
-// import { saveAs } from 'file-saver';
-// import * as XLSX from 'xlsx'
+import { saveAs } from 'file-saver';
+import * as XLSX from 'xlsx'
 // import html2pdf from 'html2pdf.js';
 
 const ListTableConnect = (props) => {
@@ -168,12 +168,12 @@ const ListTableConnect = (props) => {
 
     //   Export To Excel
     const exportToExcel = (data) => {
-        // const worksheet = XLSX.utils.json_to_sheet(data);
-        // const workbook = XLSX.utils.book_new();
-        // XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet 1');
-        // const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-        // const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });
-        // saveAs(blob, 'ExcelDataList.xlsx');
+        const worksheet = XLSX.utils.json_to_sheet(data);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet 1');
+        const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+        const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' });
+        saveAs(blob, 'ExcelDataList.xlsx');
     }
 
 //     // Export To PDF
