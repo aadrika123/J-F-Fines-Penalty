@@ -310,7 +310,11 @@ const FpChallan2 = () => {
                     {/* <div className="w-full mt-3 ">
                         <div className="text-sm">  <QrCode url={window.location?.host + `/fines/challan/${id}`} size={60} /></div>
                        
-                    </div> */}
+                    </div>  */}
+                    <div className="w-full mt-3 ">
+                        <div className="text-sm">  <QrCode url={window.location?.host + `/citizen/challan-show/${id}/direct`} size={60} /></div>
+                       
+                    </div> 
 
                     {/* 👉 Bottom Image 👈 */}
                     <div className='flex justify-center items-center mt-4'>
