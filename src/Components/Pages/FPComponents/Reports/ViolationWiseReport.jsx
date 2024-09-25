@@ -162,8 +162,8 @@ const ViolationWiseReport = () => {
         setrequestBody({
             fromDate: data?.fromDate,
             uptoDate: data?.uptoDate,
-            // departmentId : data?.department,
-            // violationSectionId : data?.violationSection,
+            departmentId: data?.department,
+            violationSectionId: data?.violationSection,
             violationId: data?.violationMade
         })
 
@@ -323,9 +323,25 @@ const ViolationWiseReport = () => {
 
 
             </form >
-
-            {/* 👉 Table 👈 */}
+            {/* By Chandan by default Search */}
             {
+                (requestBody != null) &&
+                <div className='relative'>
+                    <ListTableConnect
+                        api={api_ViolationWiseReport} // sending api
+                        columns={columns} // sending column
+                        requestBody={requestBody}
+                        changeData={changeData} // sending body
+                        search={false}
+                        loader={(status) => setloader(status)}
+                    />
+
+
+                </div>
+            }
+
+            {/* 👉 Table 👈  by RU Bharti*/}
+            {/* {
                 Object.keys(requestBody).length !== 0 &&
                 <ListTableConnect
                     api={api_ViolationWiseReport} // sending api
@@ -335,7 +351,7 @@ const ViolationWiseReport = () => {
                     search={false}
                     loader={(status) => setloader(status)}
                 />
-            }
+            } */}
 
         </>
     );

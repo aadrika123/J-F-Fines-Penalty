@@ -166,6 +166,14 @@ const FpChallan2 = () => {
                             {/* <img src={rmclogo} alt="Logo" srcset="" className="h-16 w-16 appearance-none mix-blend-darken" /> */}
                             <img src={challanDetails?.ulbDetails?.ulb_logo} alt="Logo" srcset="" className="h-16 w-16 appearance-none mix-blend-darken" />
                             {/* <span className="text-3xl font-bold uppercase">{challanDetails?.ulbDetails?.ulb_name}</span> */}
+                            <div className="flex justify-center items-center  h-[100vh] absolute top-5">
+                                <img 
+                                    src="https://i.ibb.co/RQpt4R3/Government-banner-of-Jharkhand-removebg-preview.png"
+                                    alt="Jharkhand Government Logo"
+                                    className="w-full h-[22rem] opacity-20 rounded-full border"
+                                />
+                            </div>
+
                         </div>
                         <div className='w-full flex justify-center'>
                             <div className='w-full flex justify-center mt-2'>
@@ -313,8 +321,8 @@ const FpChallan2 = () => {
                     </div>  */}
                     <div className="w-full mt-3 ">
                         <div className="text-sm">  <QrCode url={window.location?.host + `/citizen/challan-show/${id}/direct`} size={60} /></div>
-                       
-                    </div> 
+
+                    </div>
 
                     {/* 👉 Bottom Image 👈 */}
                     <div className='flex justify-center items-center mt-4'>

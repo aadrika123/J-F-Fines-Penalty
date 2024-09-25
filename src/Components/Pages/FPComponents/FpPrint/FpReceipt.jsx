@@ -104,6 +104,13 @@ const FpReceipt = () => {
                             {/* <img src={rmclogo} alt="Logo" srcset="" className="h-16 w-16 appearance-none mix-blend-darken" /> */}
                             <img src={receiptDetails?.ulbDetails?.ulb_logo} alt="Logo" srcset="" className="h-16 w-16 appearance-none mix-blend-darken" />
                             {/* <span className="text-3xl font-bold uppercase">{receiptDetails?.ulbDetails?.ulb_name}</span> */}
+                            <div className="flex justify-center items-center  h-[100vh] absolute top-5">
+                                <img
+                                    src="https://i.ibb.co/RQpt4R3/Government-banner-of-Jharkhand-removebg-preview.png"
+                                    alt="Jharkhand Government Logo"
+                                    className="w-full h-[22rem] opacity-20 rounded-full border"
+                                />
+                            </div>
                         </div>
                         <div className='w-full flex justify-center'>
                             <div className='w-full flex justify-center mt-2'>
@@ -182,7 +189,7 @@ const FpReceipt = () => {
 
                             <div className="w-full mt-16 flex justify-between items-center">
                                 <div className="w-[30%]">
-                                    <QrCode url={window.location.href+'/direct'} size={90} />
+                                    <QrCode url={window.location.href + '/direct'} size={90} />
                                 </div>
                                 <div className='w-[40%] flex flex-col gap-2 '>
                                     <div className='flex gap-1 w-full'><div className='w-full border-b-2 border-dashed border-gray-500'></div></div>
@@ -195,14 +202,14 @@ const FpReceipt = () => {
 
                     {/* 👉 bottom note 👈 */}
                     <div className="pt-1 mt-4 text-xs md:text-sm font-normal">
- 
-                            Note  :- Payment by cheque is subject to clearance.
- 
+
+                        Note  :- Payment by cheque is subject to clearance.
+
                     </div>
 
                     {/* 👉 Bottom Contact Details 👈 */}
                     <div className='flex justify-start items-center mt-6 font-normal text-xs'>
-                    E-mail ID- {receiptDetails?.ulbDetails?.email}
+                        E-mail ID- {receiptDetails?.ulbDetails?.email}
                     </div>
                     <div className='flex justify-start items-center mt-6 font-normal text-xs'>
                         अधिक जानकारी के लिए संपर्क करे :{receiptDetails?.ulbDetails?.current_website}, 1800 890 4115 or 0651-3500700

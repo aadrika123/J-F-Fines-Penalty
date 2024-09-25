@@ -32,10 +32,10 @@ const ChallanGeneratingReport = () => {
     // 👉 API constant 👈
     const { api_ChallanGeneratingReport, api_getUserList } = ProjectApiList()
     const [userList, setUserList] = useState([])
-    
+
     // 👉 Navigate constant 👈
     const navigate = useNavigate()
-    
+
     // 👉 Column constant 👈
     const columns = [
         {
@@ -265,8 +265,25 @@ const ChallanGeneratingReport = () => {
 
             </form>
 
-            {/* 👉 Table 👈 */}
-            {Object.keys(requestBody).length !== 0 &&
+            {/* By Chandan by default Search */}
+            {
+                (requestBody != null) &&
+                <div className='relative'>
+                    <ListTableConnect
+                        api={api_ChallanGeneratingReport} // sending api
+                        columns={columns} // sending column
+                        requestBody={requestBody}
+                        changeData={changeData} // sending body
+                        search={false}
+                        loader={(status) => setloader(status)}
+                    />
+
+
+                </div>
+            }
+
+            {/* 👉 Table 👈 by ru bharti  */}
+            {/* {Object.keys(requestBody).length !== 0 &&
                 <ListTableConnect
                     api={api_ChallanGeneratingReport} // sending api
                     columns={columns} // sending column
@@ -274,7 +291,7 @@ const ChallanGeneratingReport = () => {
                     changeData={changeData} // sending body
                     search={false}
                     loader={(status) => setloader(status)}
-                />}
+                />} */}
 
         </>
     );

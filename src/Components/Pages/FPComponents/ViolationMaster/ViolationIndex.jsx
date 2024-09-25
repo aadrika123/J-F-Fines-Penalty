@@ -526,7 +526,17 @@ const ViolationIndex = () => {
                     toast.success(res?.data?.message)
                     getViolationList()
                 } else {
-                    activateBottomErrorCard(true, checkErrorMessage(res?.data?.message))
+                    // activateBottomErrorCard(true, checkErrorMessage(res?.data?.message))
+                    //changes by chandan
+                    const penaltyError = res?.data?.errors?.penaltyAmount;
+                    if (penaltyError) {
+                        // If penalty amount error exists, show its message
+                        activateBottomErrorCard(true, penaltyError[0]);
+                    } else {
+                        // If no penalty error, show the general validation error message
+                        activateBottomErrorCard(true, checkErrorMessage(res?.data?.message));
+                    }
+                     //changes by chandan
                 }
                 console.log('fp violation response => ', res)
             })
