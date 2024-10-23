@@ -12,6 +12,7 @@ import { Toaster, toast } from "react-hot-toast";
 import { contextVar } from "@/Components/context/contextVar";
 import { getLocalStorageItemJsonParsed } from "@/Components/Common/localstorage";
 import Authentication from "./Components/Common/Authentication";
+import useModulePermission from "./hooks/useModulePermission";
 const UserMaster = lazy(() => import("@/Components/Pages/FPComponents/UserMaster/UserMasterIndex"));
 const NewPassowd = lazy(() => import("@/Components/Pages/Others/NewPassowd"));
 const CashVerificationIndex = lazy(() => import("@/Components/Pages/FPComponents/CashVerification/CashVerificationIndex"));
@@ -87,7 +88,7 @@ function App() {
     refresh,
     setrefresh,
   };
-
+  useModulePermission()
   // 👉 Routes Json 👈
   const allRoutes = [
 

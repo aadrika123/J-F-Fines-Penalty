@@ -24,22 +24,23 @@ import { contextVar } from "@/Components/context/contextVar";
 import { RxCross2 } from "react-icons/rx";
 import apk from "@/Components/assets/download.png";
 import UseCaptchaGenerator from "@/hooks/UseCaptchaGenerator";
-
+import { useLocation } from 'react-router-dom';
 const { api_login, api_getFreeMenuList } = ProjectApiList();
 
 
 
 function Login() {
   const { setmenuList, setuserDetails, setheartBeatCounter } =
-  useContext(contextVar);
+    useContext(contextVar);
   const [loaderStatus, setLoaderStatus] = useState(false);
   const [manualDialogStatus, setmanualDialogStatus] = useState(false);
   const userManualModalRef = useRef();
-  const {catptchaTextField,dataUrl,verifyCaptcha,newGeneratedCaptcha }= UseCaptchaGenerator();
-
+  const { catptchaTextField, dataUrl, verifyCaptcha, newGeneratedCaptcha } = UseCaptchaGenerator();
   const modalRef = useRef();
-
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const message = searchParams.get('msg') || '';
 
   const formik = useFormik({
     initialValues: {
@@ -54,32 +55,32 @@ function Login() {
       username: Yup.string().required('Enter Username'),
       password: Yup.string().required('Enter Password'),
     }),
-    onSubmit: async (values,{resetForm}) => {
+    onSubmit: async (values, { resetForm }) => {
       setIsFormSubmitted(true);
-       const isvalidcaptcha=verifyCaptcha(values?.captcha,resetForm)
-       if (isvalidcaptcha){
+      const isvalidcaptcha = verifyCaptcha(values?.captcha, resetForm)
+      if (isvalidcaptcha) {
         try {
           // Call your authentication function (authUser()) here
           await authUser(values.username, values.password);
           console.log('Form submitted:', values);
           setIsFormSubmitted(false);
-          
+
         } catch (error) {
           // Handle authentication error if needed
           console.error('Authentication failed:', error);
           setIsFormSubmitted(false); // Reset the form submission status on authentication failure
         }
-       }
-      else{
+      }
+      else {
         // alert("Invalid captcha")
         toast.error('Invalid captcha');
       }
-     
+
     },
   });
-  
 
-  
+
+
 
 
 
@@ -286,7 +287,7 @@ function Login() {
           setLoaderStatus(false);
           toast.error(response?.data?.message);
           newGeneratedCaptcha();
-          formik?.setFieldValue('captcha','');
+          formik?.setFieldValue('captcha', '');
         }
       })
       .catch(function (error) {
@@ -294,7 +295,7 @@ function Login() {
         console.log("--2--login error...", error);
         toast.error("Server Error");
         newGeneratedCaptcha();
-        formik?.setFieldValue('captcha','');
+        formik?.setFieldValue('captcha', '');
       });
   };
 
@@ -315,11 +316,11 @@ function Login() {
         if (response.data.status == true) {
           // setLocalStorageItemStrigified('menuList', response?.data?.data?.permission)
           // setLocalStorageItemStrigified('userDetails', response?.data?.data?.userDetails)
-console.log("nbvdvbjdb",response?.data?.data?.permission)
+          console.log("nbvdvbjdb", response?.data?.data?.permission)
           setmenuList(response?.data?.data?.permission);
           setuserDetails(response?.data?.data?.userDetails);
-          setLocalStorageItemStrigified("menuList",response?.data?.data?.permission)
-          window.location.href="/fines/home"
+          setLocalStorageItemStrigified("menuList", response?.data?.data?.permission)
+          window.location.href = "/fines/home"
         } else {
           console.log("false menu list => ", response?.data?.message);
           setLoaderStatus(false);
@@ -514,7 +515,11 @@ console.log("nbvdvbjdb",response?.data?.data?.permission)
           </nav>
         </div>
       </header>
+     {message && (
+          <div className='w-full h-6 bg-red-600 flex justify-center items-center text-white text-lg p-3'><span className='font-semibold'>⚠️ Permission Denied</span> - {message}</div>
+        )} 
       <main className=" bg-gray-100 flex justify-center items-center md:h-[78vh]">
+       
         <div className="pt-8 bg-gray-100 darks:bg-gray-900 darks:bg-opacity-40">
           <div className="mx-auto px-4 ">
             <div className="flex flex-wrap flex-row justify-center gap-2 items-center">
@@ -599,18 +604,18 @@ console.log("nbvdvbjdb",response?.data?.data?.permission)
                         </div> */}
                         <div className="mb-6">
                           <div className="flex justify-between items-center">
-                             <div className="bg-gray-400 px-3 py-1 rounded-sm">
-                              <img src={dataUrl}/>
-                             </div>
-                             <div>
+                            <div className="bg-gray-400 px-3 py-1 rounded-sm">
+                              <img src={dataUrl} />
+                            </div>
+                            <div>
                               <button type="button" onClick={newGeneratedCaptcha} className="text-xs text-blue-400">Reload Captcha</button>
-                             </div>
+                            </div>
                           </div>
                           <div className="mt-4">
-                          {catptchaTextField(formik)}
+                            {catptchaTextField(formik)}
                           </div>
-                         
-                         
+
+
                         </div>
 
 
@@ -651,7 +656,7 @@ console.log("nbvdvbjdb",response?.data?.data?.permission)
                               Login
                             </button>
                           )}
-{/* 
+                          {/* 
                           <div
                             onClick={() => modalRef.current.showModal()}
                             className="select-none py-4 text-center font-semibold hover:text-blue-600 hover:underline cursor-pointer"
