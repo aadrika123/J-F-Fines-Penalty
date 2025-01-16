@@ -156,6 +156,11 @@ export default function ProjectApiList() {
     api_enf_cell: `${baseUrl}/api/user/enf-officer`,
     api_violation_list: `${baseUrl}/api/v2/violation/crud/list`,
 
+
+
+    checkPropertyService: `${baseUrl}/api/get/services-by-module`,
+    getPermittedServiceList: `${baseUrl}/api/get/services-b-ulb-id`,
+
     }
 
 

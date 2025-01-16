@@ -13,6 +13,8 @@ import { contextVar } from "@/Components/context/contextVar";
 import { getLocalStorageItemJsonParsed } from "@/Components/Common/localstorage";
 import Authentication from "./Components/Common/Authentication";
 import useModulePermission from "./hooks/useModulePermission";
+import { UseServiceCheck } from "./hooks/UseServiceCheck";
+import ServiceRestrictionLayout from "./Components/Common/Error/ServiceRestrictionLayout";
 const UserMaster = lazy(() => import("@/Components/Pages/FPComponents/UserMaster/UserMasterIndex"));
 const NewPassowd = lazy(() => import("@/Components/Pages/Others/NewPassowd"));
 const CashVerificationIndex = lazy(() => import("@/Components/Pages/FPComponents/CashVerification/CashVerificationIndex"));
@@ -88,6 +90,7 @@ function App() {
     refresh,
     setrefresh,
   };
+  UseServiceCheck()
   useModulePermission()
   // 👉 Routes Json 👈
   const allRoutes = [
@@ -190,6 +193,9 @@ function App() {
         hasContent={true} roles={['ENFORCEMENT CELL', 'ADMIN','ACCOUNTANT']}
       > <CashVerificationIndex /> </Authentication>
     },
+
+    { path: "/service-restriction", element:  <ServiceRestrictionLayout/> },
+   
   ];
   // const allRoutesNotInJSK = [
   //   { path: "/transfer", element: <TransferPage /> },
