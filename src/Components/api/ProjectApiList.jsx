@@ -5,7 +5,7 @@ export default function ProjectApiList() {
     let apiList = {
 
         api_moduleList: `${baseUrl}/api/user-managment/v2/crud/module/list`,
-        
+        api_moduleList: `${baseUrl}/api/user-managment/v2/crud/module/list`,
         //heartBeatApi
         api_checkHeartBeat: `${baseUrl}/heartbeat`,
         // 1 API TO MENU LIST

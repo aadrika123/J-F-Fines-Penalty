@@ -15,10 +15,16 @@ import NotificationComponent from './NotificationComponent';
 import axios from 'axios';
 import ProjectApiList from '@/Components/api/ProjectApiList';
 import ApiHeader from '@/Components/api/ApiHeader';
+import PermittedModuleCard from './PermittedModuleCard';
 // import apk from '@/Components/assets/download.png'
 
 const TopHeader = (props) => {
+  const [device, setDevice] = useState();
+  useEffect(() => {
+    const deviceName = window.localStorage.getItem("device");
+    setDevice(deviceName);
 
+  }, []);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [isLoading, setisLoading] = useState(false)
   const [modalIsOpen2, setIsOpen2] = useState(false);
@@ -63,7 +69,7 @@ const TopHeader = (props) => {
       .then((res) => {
         console.log("log out response :: ", res)
       })
-      .finally(() => {})
+      .finally(() => { })
   }
 
   const fetchModuleList = () => {
@@ -77,7 +83,7 @@ const TopHeader = (props) => {
   }
 
   useEffect(() => {
-    // fetchModuleList()
+    fetchModuleList()
   }, [])
 
 
@@ -86,12 +92,16 @@ const TopHeader = (props) => {
       {isLoading && <BarLoader />}
       <div className='bg-white flex flex-row justify-between px-2 sm:px-6 border shadow-sm print:hidden py-3 z-50 animate__animated animate__fadeInDown animate__faster'>
         <div className='flex items-center md:w-[20rem] w-full justify-between gap-2 sm:gap-4'>
-          <span className='font-semibold flex items-center gap-2'> <img src={ulb_data()?.ulb_logo} alt="" srcset="" className='w-9' /> <div className='flex flex-col'><div className='text-lg md:text-xl '>Fines & Penalties</div><div className='text-sm hidden'>Ranchi Nagar Nigam, Ranchi</div> </div></span>
+          <span className='font-semibold flex items-center gap-2'> <img src={ulb_data()?.ulb_logo} alt="" srcset="" className='w-9' /> <div className='flex flex-col'><div className='text-lg md:text-xl whitespace-nowrap '>Fines & Penalties</div><div className='text-sm hidden'>Ranchi Nagar Nigam, Ranchi</div> </div></span>
           <div onClick={() => {
             settoggleBar(!toggleBar)
           }}>
             <span className='cursor-pointer text-gray-700 text-xl' ><AiOutlineBars /></span>
           </div>
+          {device != "mobile" &&
+            <div className='ml-2 md:ml-20'><span onClick={() => openModal2()} className='bg-gray-200 px-4 py-1 cursor-pointer hover:shadow-md'>Modules</span>
+            </div>
+          }
 
           <div className='flex justify-center h-max select-none'>
             {/* <a href='../public/Fines.apk' download className='h-[40%] cursor-pointer transition-all duration-200 hover:scale-105 rounded-md'>
@@ -101,6 +111,8 @@ const TopHeader = (props) => {
               </div>
             </a> */}
           </div>
+
+
         </div>
         {/* <div className=' w-full ml-2 flex items-center'><span onClick={() => openModal2()} className='bg-gray-200 px-4 py-1 cursor-pointer transition-all duration-200 hover:shadow-md'>Modules</span> </div> */}
         <div className='flex items-center sm:gap-4 gap-2'>
@@ -147,7 +159,21 @@ const TopHeader = (props) => {
       >
         <PermittedModuleCard closeModuleModal={closeModal} permittedModuleList={permittedModuleList} loader={loader} />
 
-      </Modal> */}
+      </Modal>
+      {
+        notificationState && <NotificationComponent setnotificationState={setnotificationState} />
+      } */}
+
+      <Modal
+        isOpen={modalIsOpen2}
+        onRequestClose={closeModal}
+        className="z-20 h-screen w-screen backdrop-blur-sm flex flex-row justify-center items-center overflow-auto"
+        contentLabel="Example Modal"
+      >
+        {/* <PermittedModuleCard closeModuleModal={closeModal2} /> */}
+        <PermittedModuleCard closeModuleModal={closeModal} permittedModuleList={permittedModuleList} />
+
+      </Modal>
       {
         notificationState && <NotificationComponent setnotificationState={setnotificationState} />
       }
