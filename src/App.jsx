@@ -344,6 +344,7 @@ function App() {
 
 
           <Route path="/" element={<Login />} />
+          <Route path="/transfer" element={<Login />} />
 
 
           <Route element={<ProtectedRoutes />}>

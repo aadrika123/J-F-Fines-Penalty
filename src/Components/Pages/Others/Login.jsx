@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-hot-toast";
@@ -25,6 +25,7 @@ import { RxCross2 } from "react-icons/rx";
 import apk from "@/Components/assets/download.png";
 import UseCaptchaGenerator from "@/hooks/UseCaptchaGenerator";
 import { useLocation } from 'react-router-dom';
+import { use } from "react";
 const { api_login, api_getFreeMenuList } = ProjectApiList();
 
 
@@ -41,6 +42,9 @@ function Login() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const message = searchParams.get('msg') || '';
+
+  console.log(location.pathname, "location")
+  
 
   const formik = useFormik({
     initialValues: {
@@ -156,9 +160,14 @@ function Login() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getLocalStorageItem("token") != "null" &&
-      getLocalStorageItem("token") != null &&
-      navigate("/home");
+    if (location.pathname == "/transfer") {
+      window.localStorage.clear()
+      navigate("/");
+    } else {
+      getLocalStorageItem("token") != "null" &&
+        getLocalStorageItem("token") != null &&
+        navigate("/home");
+    }
   }, []);
 
   const labelStyle = "text-gray-800 text-sm";
@@ -516,11 +525,11 @@ function Login() {
           </nav>
         </div>
       </header>
-     {message && (
-          <div className='w-full h-6 bg-red-600 flex justify-center items-center text-white text-lg p-3'><span className='font-semibold'>⚠️ Permission Denied</span> - {message}</div>
-        )} 
+      {message && (
+        <div className='w-full h-6 bg-red-600 flex justify-center items-center text-white text-lg p-3'><span className='font-semibold'>⚠️ Permission Denied</span> - {message}</div>
+      )}
       <main className=" bg-gray-100 flex justify-center items-center md:h-[78vh]">
-       
+
         <div className="pt-8 bg-gray-100 darks:bg-gray-900 darks:bg-opacity-40">
           <div className="mx-auto px-4 ">
             <div className="flex flex-wrap flex-row justify-center gap-2 items-center">
