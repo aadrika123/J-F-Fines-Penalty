@@ -36,7 +36,7 @@ function Login() {
   const [loaderStatus, setLoaderStatus] = useState(false);
   const [manualDialogStatus, setmanualDialogStatus] = useState(false);
   const userManualModalRef = useRef();
-  const { catptchaTextField, dataUrl, verifyCaptcha, newGeneratedCaptcha } = UseCaptchaGenerator();
+  const { catptchaTextField, dataUrl, verifyCaptcha, newGeneratedCaptcha ,captchaImage} = UseCaptchaGenerator();
   const modalRef = useRef();
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const location = useLocation();
@@ -547,7 +547,7 @@ function Login() {
                           </h1>
                         </div>
                         <hr className="block w-12 h-0.5 mx-auto my-5 bg-gray-700 border-gray-700" />
-                        <div className="mb-6">
+                        <div className="mb-2">
                           <label
                             htmlFor="inputemail"
                             className="inline-block mb-2"
@@ -568,7 +568,7 @@ function Login() {
                               : null}
                           </span>
                         </div>
-                        <div className="mb-6">
+                        <div className="mb-2">
                           <div className="flex flex-wrap flex-row">
                             <div className="flex-shrink max-w-full w-1/2">
                               <label
@@ -612,10 +612,10 @@ function Login() {
                             <div className="text-red-600 text-sm mt-1">{formik.errors.userAnswer}</div>
                           )}
                         </div> */}
-                        <div className="mb-6">
+                        <div className="mb-2">
                           <div className="flex justify-between items-center">
-                            <div className="bg-gray-400 px-3 py-1 rounded-sm">
-                              <img src={dataUrl} />
+                            <div className="   rounded-sm">
+                              <img src={captchaImage} />
                             </div>
                             <div>
                               <button type="button" onClick={newGeneratedCaptcha} className="text-xs text-blue-400">Reload Captcha</button>
