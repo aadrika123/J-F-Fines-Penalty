@@ -11,7 +11,7 @@ import check from '@/Components/assets/check.png'
 
 const ApplicationSubmitScreen = (props) => {
   const [modalIsOpen, setIsOpen] = useState(false);
-
+//_______________ USE EFFECT TO OPEN MODAL ON SUBMIT BUTTON CLICK_________________________
   useEffect(() => {
     console.log("enter in submission screen with application no.  =>  ", props?.appNo)
     props?.openSubmit == true && openModal()
@@ -19,6 +19,7 @@ const ApplicationSubmitScreen = (props) => {
   
 
   const openModal = () => setIsOpen(true);
+  //_______________ FUNCTION TO CLOSE MODAL_________________________
   const closeModal = () => {
     props?.refresh()
     setIsOpen(false);

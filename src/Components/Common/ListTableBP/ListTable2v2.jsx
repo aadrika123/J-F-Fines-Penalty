@@ -21,6 +21,7 @@ function ListTable2(props) {
     const [perPageC, setperPageC] = useState(10)
     const [pageNo, setpageNo] = useState(0)
 
+    // Opens a new window and prints a formatted table, excluding the 'Action' column.
     const printTable = () => {
         const printWindow = window.open('', '_blank');
         printWindow.document.write('<html><head><title>Print</title>');

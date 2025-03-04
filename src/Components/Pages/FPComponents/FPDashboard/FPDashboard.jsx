@@ -38,7 +38,8 @@ function FPDashboard() {
     const [isLoading, setisLoading] = useState(false)
     const [isLoading2, setisLoading2] = useState(false)
 
-    // 👉 Function 1 👈
+   // ______________FUNCTION TO FETCH APPROVED LIST DATA FROM API, HANDLE LOADING STATE, AND UPDATE STATE WITH RESPONSE________________
+
     const fetchApprovedList = () => {
         setisLoading(true)
         AxiosInterceptors.post(api_FPTrack, {}, ApiHeader())
@@ -52,7 +53,8 @@ function FPDashboard() {
             .finally(() => setisLoading(false))
     }
 
-    // 👉 Function 2 👈
+    //__________________ FUNCTION TO FETCH PENDING LIST DATA FROM API, HANDLE LOADING STATE, AND UPDATE STATE WITH RESPONSE_________________
+
     const fetchPendingList = () => {
         setisLoading2(true)
         AxiosInterceptors.post(api_getInfractionList, {}, ApiHeader())

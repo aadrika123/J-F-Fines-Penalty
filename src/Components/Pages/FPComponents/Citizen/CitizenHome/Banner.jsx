@@ -16,7 +16,7 @@ const Banner = () => {
     const navigate = useNavigate()
 
     const linkStyle = color => `flex gap-1 text-xs md:text-sm items-center bg-${color}-100 text-gray-800 px-4 py-1 rounded-md drop-shadow-sm border border-white hover:scale-105 transition-all duration-250 cursor-pointer`
-
+//_________________________QUICK LINKS_________________
     const quickLinks = [
         { label: "Search Challan", link: "search-challan/direct" },
         { label: "Know Your Enforcement Officer", link: "enforcement-officer-list" },

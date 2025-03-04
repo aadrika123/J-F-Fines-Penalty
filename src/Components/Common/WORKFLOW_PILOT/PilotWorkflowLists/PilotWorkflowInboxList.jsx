@@ -50,7 +50,7 @@ function PilotWorkflowInboxList(props) {
     searchBy: yup.string().required("Select filter type"),
     entry: yup.string().required("Enter the parameter"),
   });
-
+// _______  FORMIK FUNCTION  _______
   const formik = useFormik({
     initialValues: {
       searchBy: "",
@@ -62,7 +62,7 @@ function PilotWorkflowInboxList(props) {
     validationSchema,
   });
 
-  // 👉 Function 1 👈
+  // _______  GET ALL LIST FUNCTION  _______
   const getAllList = () => {
 
     formik.setFieldValue('searchBy', '')
@@ -76,7 +76,7 @@ function PilotWorkflowInboxList(props) {
 
   }
 
-  // 👉 Function 2 👈
+  //  _______  FETCH DATA FUNCTION  _______
   const fetchData = (data) => {
     setviewAll(true)
     setrequestBody({

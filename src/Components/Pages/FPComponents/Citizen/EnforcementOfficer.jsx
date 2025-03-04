@@ -94,7 +94,7 @@ const EnforcementOfficer = () => {
     setErrorMessage(message)
   }
 
-  // 👉 Function 2 👈
+  //_________________________ FUNCTION TO HANDLE MODAL ACTIONS BASED ON TYPE (ADD, EDIT, DELETE, ASSIGN) AND SET RELEVANT STATE VALUES._________________________
   const handleModal = (type, data = null) => {
 
     setModalType(type)
@@ -414,7 +414,8 @@ const EnforcementOfficer = () => {
     }
   })
 
-  // 👉 Function 3 👈
+ //__________ FUNCTION TO FETCH USER LIST BASED ON TYPE, HANDLE LOADING STATE, AND UPDATE DATA OR ERROR STATES ACCORDINGLY_______________
+
   const getUserList = () => {
 
     setDataList([])
@@ -458,7 +459,8 @@ const EnforcementOfficer = () => {
       })
   }
 
-  // 👉 Function 4 👈
+  //__________________FUNCTION TO RENDER AN INPUT FIELD, FILE UPLOAD, OR SELECT DROPDOWN BASED ON THE PROVIDED PARAMETERS___________________
+
   const inputBox = (key, title = '', type, width = '', hint = '', required = false, options = [], okey = '', ovalue = '') => {
     return (
       <div className={`flex flex-col ${width} `}>
@@ -482,7 +484,7 @@ const EnforcementOfficer = () => {
     );
   }
 
-  // 👉 Function 5 👈
+ //_______________________ FUNCTION TO SUBMIT FINAL DATA, HANDLE LOADING STATE, AND MAKE API CALLS BASED ON MODAL TYPE_______________________
   const submitFun = (values) => {
 
     setLoader2(true)
@@ -605,6 +607,7 @@ const EnforcementOfficer = () => {
         setsLoader(false)
       })
   }
+//________________FUNCTION TO HANDLE INPUT CHANGES, VALIDATE FILE UPLOADS, AND UPDATE STATE ACCORDINGLY_____________________
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -635,6 +638,7 @@ const EnforcementOfficer = () => {
     }
 
   }
+//________________FUNCTION TO ASSIGN A ROLE TO A USER, HANDLE API REQUEST, AND UPDATE UI BASED ON RESPONSE___________________
 
   const roleAssignFun = () => {
 

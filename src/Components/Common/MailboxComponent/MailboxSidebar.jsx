@@ -12,10 +12,11 @@ import MailboxLink from '@/Components/Common/MailboxComponent/MailboxLink'
 import WorkFlowCandidate from '@/Components/Common/MailboxComponent/WorkFlowCandidate'
 
 function MailboxSidebar(props) {
+    //________ STATE VARIABLE_____________
     const [tabIndex, setTabIndex] = useState(0)
 
     console.log('can transferd from index', props.workflowCandidates)
-
+//__________ 
     const tabSwitch = (index) => {
         setTabIndex(index)
         props.fun(index)

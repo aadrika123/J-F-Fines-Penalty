@@ -53,7 +53,7 @@ function PilotWorkflowActions(props) {
   const [place, setPlace] = useState('')
   const [hearing, setHearing] = useState(false)
 
-  let prResponse // GLOBAL PROMISE FUNCTION VARIABLE
+  let prResponse //___________ GLOBAL PROMISE FUNCTION VARIABLE________________
 
   function closeModal() {
     setIsOpen(false);
@@ -82,14 +82,13 @@ function PilotWorkflowActions(props) {
     setIsOpen(false)
 
   }
-
-  //{////********recording comment here*******//////}
-  const commentFun = (commentText) => {
+//____________ RECORING COMMENT HERE _______________
+    const commentFun = (commentText) => {
     setCommentText(commentText);
     console.log("comment...", commentText);
   };
+//_________SENDING INDEPENDENT COMMENT ___________
 
-  // {////********sending independent comment*******//////}
   const sendIndependentComment = () => {
 
     if (commentText == '') {
@@ -130,8 +129,8 @@ function PilotWorkflowActions(props) {
   }, [props?.currentRoleId, props?.applicationData])
 
   console.log('info permission => ', props?.currentRoleId, props?.applicationData?.data)
+//___________ SENDING APPLICATION TO LEVEL ___________
 
-  //{////********sending application to level*******//////}
   const sendApplicationToLevel = (e) => {
 
     console.log("receiverRoleId ", e.target.value);
@@ -249,7 +248,7 @@ function PilotWorkflowActions(props) {
       });
 
   };
-
+//_____________________ SETTING APPOINTMENT DATE ______________________
   const setappointmentDate = (e) => {
 
     setisLoading(true)
@@ -286,8 +285,7 @@ function PilotWorkflowActions(props) {
 
       });
   }
-
-  //{////********toggle escalate function*******//////}
+// ___________________ SEND APPLICATION TO LEVEL INDEPENDENTLY ______________________
   const escalateAction = async (status) => {
     closeMultiModal()
     setisLoading(true)
@@ -350,6 +348,8 @@ function PilotWorkflowActions(props) {
 
       });
   };
+
+  //_______________________ ESCALATE STATUS _______________________
   const swithEscalateStatus = (status) => {
     setescalateStatus(status); //setting the escalateStatus to show escalate view
     escalateAction(status);
@@ -362,8 +362,8 @@ function PilotWorkflowActions(props) {
     // }
     // openMultiModal(modalText, 'escalation')
   };
-
-  //{////********sending back to citizen*******//////}
+// _________________________ SEND APPLICATION TO CITIZEN _______________________
+ 
   const sendBackToCitizen = (e) => {
 
     console.log("safId", props?.id);
@@ -414,8 +414,8 @@ function PilotWorkflowActions(props) {
   };
 
   console.log('assessment Type => ', props?.assessmentType)
-
-  //{////********Application Approve & Reject*******//////}
+// _________________________ APPLICATION APPROVE & REJECT _______________________
+  
   const approveRejectApplication = (e) => {
     // props.showTabFun(false);
     // props?.openModal('Application has been approved with PT no. 1122')

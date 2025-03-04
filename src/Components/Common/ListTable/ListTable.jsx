@@ -66,6 +66,9 @@ function ListTable(props) {
     //     console.log(data)
     // }
 
+  
+// 
+// __________ THIS FUNCTION EXPORTS DATA IN EXCEL __________________
     const makeExportFun = () => {
         let data = props?.dataList?.map((elem, index) => {
             // Map over the columns for each element in dataList

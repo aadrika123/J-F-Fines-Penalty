@@ -42,7 +42,7 @@ const ListTableConnect = (props) => {
     const [dataList, setdataList] = useState([])
     const [loader, setloader] = useState(false)
 
-    // 👉 Function 1 👈
+    // __________// FUNCTION TO FETCH DATA FROM AN API USING AXIOS, HANDLE LOADING STATE, AND UPDATE DATA OR ERROR STATE ACCORDINGLY____________
     const searchOldFun = () => {
 
         seterrorState(false)
@@ -82,17 +82,17 @@ const ListTableConnect = (props) => {
 
     }
 
-    // 👉 Function 2 👈
+    //  ________FUNCTION TO INCREMENT THE PAGE COUNT BY 1________ 
     const nextPageFun = () => {
         setpageCount(currentPage + 1)
     }
 
-    // 👉 Function 3 👈
+    //  ________FUNCTION TO DECREMENT THE PAGE COUNT BY 1________
     const prevPageFun = () => {
         setpageCount(currentPage - 1)
     }
 
-    // 👉 Function 4 👈
+    // ________FUNCTION TO SET THE NUMBER OF DATA PER PAGE________
     const perPageFun = (val) => {
 
         let checkPage = parseInt(totalCount / val)
@@ -118,22 +118,22 @@ const ListTableConnect = (props) => {
         // setperPageCount(val)
     }
 
-    // 👉 Function 5 👈
+   // _________FUNCTION TO JUMP ON FIRST PAGE_________
     const firstPageFun = () => {
         setpageCount(1)
     }
 
-    // 👉 Function 6 👈
+   // _________FUNCTION TO JUMP ON LAST PAGE_________
     const lastPageFun = () => {
         setpageCount(lastPage)
     }
 
-    // 👉 Function 7 👈
+    // _________FUNCTION TO JUMP ON ANY PAGE_________
     const gotoPageFun = (val) => {
         setpageCount(val)
     }
 
-    // 👉 Function 8 👈
+    // _________FUNCTION TO MAKE EXPORT TABLE_________
     const makeExportFun = (dataList) => {
 
         let data = dataList?.map((elem, index) => {
@@ -166,7 +166,7 @@ const ListTableConnect = (props) => {
 
     };
 
-    //   Export To Excel
+    // _________FUNCTION TO EXPORT DATA IN EXCEL_________
     const exportToExcel = (data) => {
         const worksheet = XLSX.utils.json_to_sheet(data);
         const workbook = XLSX.utils.book_new();
@@ -214,7 +214,7 @@ const ListTableConnect = (props) => {
 //     };
 
 
-    // 👉 Function 9 👈
+    // _________FUNCTION TO EXPORT DATA IN PDF_________
     const exportDataFun = (type) => {
 
         setloader(true)
@@ -245,12 +245,12 @@ const ListTableConnect = (props) => {
 
     }
 
-    // 👉 Function 10 👈
+    // _________FUNCTION TO DOWNLOAD THE EXPORTED DATA IN CSV_________
     const downloadFun = () => {
         setcsvStatus(true)
     }
 
-    // 👉 Calling Function 1 on Data change 👈
+    // _________USE EFFECT TO CALL FUNCTION 1 WHEN PAGE NO. OR DATA PER PAGE CHANGE_________
     useEffect(() => {
 
         if (props?.requestBody != null) {
@@ -260,7 +260,7 @@ const ListTableConnect = (props) => {
         }
     }, [props?.changeData])
 
-    // 👉 Calling Function 1 when page no. or data per page change 👈
+   // _________USE EFFECT TO CALL FUNCTION 1 WHEN PAGE NO. OR DATA PER PAGE CHANGE_________
     useEffect(() => {
         setloader(true)
         searchOldFun()

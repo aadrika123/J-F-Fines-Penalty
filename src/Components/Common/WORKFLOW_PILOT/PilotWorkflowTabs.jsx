@@ -39,7 +39,7 @@ export default function PilotWorkflowTabs(props) {
     fetchDetailsById();
   }, [props.id]);
 
-
+//_______________________FETCHING DETAILS BY ID_____________________
   const fetchDetailsById = () => {
     setisLoading(true);
     const header = ApiHeader()
@@ -71,11 +71,11 @@ export default function PilotWorkflowTabs(props) {
     setindex(id)
     console.log("🚀 ~ file: PropertyConcessionDetailsTabs.js:147 ~ funId ~ id", id);
   }
-
+//_______________________CHANGE TAB FUNCTION_____________________
   const changeTabFun = (index) => {
     setactiveTab(index)
   }
-
+//_______________________ACTIVATE BOTTOM ERROR CARD_____________________
   const activateBottomErrorCard = (state, msg) => {
     seterroMessage(msg)
     seterroState(state)

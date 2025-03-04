@@ -20,7 +20,7 @@ export default function PilotWorkflowListBox(props) {
     setValue(newValue);
     setIndex(newValue)
   };
-
+// ___________________________VIEW DETAILS FUNCTION_________________________
   const viewDetails = (id, type) => {   //viewDetails to go to Details tab and show data of selected holding application
     setlistId(id)   //updating state with application primary key
     handleChange(id, 1)

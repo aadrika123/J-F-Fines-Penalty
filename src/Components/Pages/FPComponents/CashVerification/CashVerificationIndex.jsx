@@ -108,7 +108,7 @@ const CashVerificationIndex = () => {
     { title: "Date", key: "date", width: 'md:w-[20%] w-full', type: 'date', hint: "", required: true, options: '', okey: '', ovalue: '' },
   ]
 
-  // 👉 Function 1 👈
+  //________________ THIS FUNCTION WILL RETURN INPUT FIELD _______________________
   const inputBox = (key, title = '', type, width = '', hint = '', required = false, options = [], okey = '', ovalue = '') => {
     return (
       <div className={`flex flex-col ${width} `}>
@@ -158,7 +158,7 @@ const CashVerificationIndex = () => {
     setErrorMessage(message)
   }
 
-  // 👉 Function 2 👈
+  // _______________ FETCH DATA FUNCTION _______________
   const fetchData = (data) => {
 
     setloader(true)
@@ -195,7 +195,7 @@ const CashVerificationIndex = () => {
   useEffect(() => {
     fetchData({ date: getCurrentDate() })
   }, [])
-
+//________________________ GET CASH DETAIL BY ID _______________________
   const getCashDetailById = (data) => {
 
     setGetData(data)
@@ -231,12 +231,12 @@ const CashVerificationIndex = () => {
 
   }
 
-  // 👉 Function 1 👈
+  //_____________ CHECK ID FUNCTION _______________
   const checkId = (id) => {
     return cvIds.some(item => parseInt(item) == parseInt(id))
   }
 
-  // 👉 Function 2 👈
+  //______________________ HANDLE CHECKBOX FUNCTION _______________________
   const handleCheckBox = (e, id = '') => {
 
     const name = e.target.name;
@@ -264,7 +264,7 @@ const CashVerificationIndex = () => {
     }
 
   }
-
+//______________________ VERIFY FUNCTION _______________________
   const verifyFun = () => {
 
     if (cvIds?.length == 0) {

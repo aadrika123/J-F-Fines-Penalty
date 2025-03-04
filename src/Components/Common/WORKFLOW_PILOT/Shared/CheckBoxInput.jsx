@@ -5,7 +5,7 @@ export default function ControlledCheckbox(props) {
     //setting the escalted status ...0 for fresh
     const [checked, setChecked] = React.useState(props?.is_escalate);
     console.log('is escalate in concession...',props?.is_escalate)
-
+//_____________________ HANDLING THE CHANGE EVENT_____________________
     const handleChange = (event) => {
         setChecked(event.target.checked);
         props.fun(event.target.checked)

@@ -12,6 +12,7 @@ import { useQuery } from "react-query";
 import AxiosInterceptors from '@/Components/Common/AxiosInterceptors';
 
 function MemebersAction() {
+    //______ FEATURE TO GET DATA FROM API________
     const { isLoading, data, isError, error } = useQuery("first-query", () => {
         return AxiosInterceptors.get("http://localhost:3001/levelCandidateList");
     });

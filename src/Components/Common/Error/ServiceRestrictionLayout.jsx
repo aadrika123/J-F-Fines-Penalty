@@ -3,6 +3,7 @@ import { HiLockClosed, HiExclamation, HiInformationCircle } from 'react-icons/hi
 import { useLocation } from "react-router-dom";
 
 const ServiceRestrictionLayout = () => {
+  // Extracts the 'service' query parameter from the URL using a custom hook.
   const useQuery = () => new URLSearchParams(useLocation().search)
   const query = useQuery()
   const services = query.get('service')
