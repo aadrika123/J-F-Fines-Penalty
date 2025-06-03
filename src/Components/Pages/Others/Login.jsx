@@ -36,7 +36,7 @@ function Login() {
   const [loaderStatus, setLoaderStatus] = useState(false);
   const [manualDialogStatus, setmanualDialogStatus] = useState(false);
   const userManualModalRef = useRef();
-  const { catptchaTextField, dataUrl, verifyCaptcha, newGeneratedCaptcha ,captchaImage} = UseCaptchaGenerator();
+  const { catptchaTextField, dataUrl, verifyCaptcha, newGeneratedCaptcha, captchaImage } = UseCaptchaGenerator();
   const modalRef = useRef();
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const location = useLocation();
@@ -44,7 +44,20 @@ function Login() {
   const message = searchParams.get('msg') || '';
 
   console.log(location.pathname, "location")
-  
+
+  const preventCopyPaste = (e) => {
+    e.preventDefault();
+    return false;
+  };
+
+  const preventKeyboardShortcuts = (e) => {
+    if (e.ctrlKey || e.metaKey) {
+      if (['c', 'v', 'x'].includes(e.key.toLowerCase())) {
+        e.preventDefault();
+      }
+    }
+  };
+
 
   const formik = useFormik({
     initialValues: {
@@ -561,6 +574,12 @@ function Login() {
                             aria-label="email"
                             type="email"
                             required
+                            autoComplete="off"
+                            onCopy={preventCopyPaste}
+                            onCut={preventCopyPaste}
+                            onPaste={preventCopyPaste}
+                            onContextMenu={preventCopyPaste}
+                            onKeyDown={preventKeyboardShortcuts}
                           />
                           <span className="text-red-600 text-xs">
                             {formik.touched.username && formik.errors.username
@@ -586,6 +605,12 @@ function Login() {
                             type="password"
                             defaultValue
                             required
+                            autoComplete="new-password"
+                            onCopy={preventCopyPaste}
+                            onCut={preventCopyPaste}
+                            onPaste={preventCopyPaste}
+                            onContextMenu={preventCopyPaste}
+                            onKeyDown={preventKeyboardShortcuts}
                           />
                           <span className="text-red-600 text-xs">
                             {formik.touched.password && formik.errors.password
@@ -621,10 +646,26 @@ function Login() {
                               <button type="button" onClick={newGeneratedCaptcha} className="text-xs text-blue-400">Reload Captcha</button>
                             </div>
                           </div>
-                          <div className="mt-4">
+                          {/* <div className="mt-4">
                             {catptchaTextField(formik)}
+                          </div> */}
+                          <div className="mt-3">
+                            <input
+                              {...formik.getFieldProps("captcha")}
+                              className="w-full leading-5 py-1.5 px-3 rounded text-gray-800 bg-white border border-gray-300 focus:outline-none focus:border-gray-400 darks:text-gray-300 darks:bg-gray-700 darks:border-gray-700"
+                              type="text"
+                              required
+                              autoComplete="off"
+                              onCopy={preventCopyPaste}
+                              onCut={preventCopyPaste}
+                              onPaste={preventCopyPaste}
+                              onContextMenu={preventCopyPaste}
+                              onKeyDown={preventKeyboardShortcuts}
+                            />
+                            <span className="text-red-600 text-xs">
+                              {formik.touched.captcha && formik.errors.captcha ? formik.errors.captcha : null}
+                            </span>
                           </div>
-
 
                         </div>
 
