@@ -26,6 +26,7 @@ import apk from "@/Components/assets/download.png";
 import UseCaptchaGenerator from "@/hooks/UseCaptchaGenerator";
 import { useLocation } from 'react-router-dom';
 import { use } from "react";
+import CryptoJS from "crypto-js";
 const { api_login, api_getFreeMenuList } = ProjectApiList();
 
 
@@ -58,6 +59,26 @@ function Login() {
     }
   };
 
+  function encryptPassword(plainPassword) {
+    const secretKey = "c2ec6f788fb85720bf48c8cc7c2db572596c585a15df18583e1234f147b1c2897aad12e7bebbc4c03c765d0e878427ba6370439d38f39340d7e";
+
+    // Match PHP's binary hash key
+    const key = CryptoJS.enc.Latin1.parse(
+      CryptoJS.SHA256(secretKey).toString(CryptoJS.enc.Latin1)
+    );
+
+    // PHP IV is a 16-character *string* (not hex)
+    const ivString = CryptoJS.SHA256(secretKey).toString().substring(0, 16);
+    const iv = CryptoJS.enc.Latin1.parse(ivString); // treat as string, not hex
+
+    const encrypted = CryptoJS.AES.encrypt(plainPassword, key, {
+      iv: iv,
+      mode: CryptoJS.mode.CBC,
+      padding: CryptoJS.pad.Pkcs7,
+    });
+
+    return CryptoJS.enc.Base64.stringify(encrypted.ciphertext);
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -78,7 +99,8 @@ function Login() {
       if (isvalidcaptcha) {
         try {
           // Call your authentication function (authUser()) here
-          await authUser(values.username, values.password);
+          // await authUser(values.username, values.password);
+          await authUser(values.username, encryptPassword(values.password));
           console.log('Form submitted:', values);
           setIsFormSubmitted(false);
 
@@ -198,7 +220,8 @@ function Login() {
     setLoaderStatus(true);
     let requestBody = {
       email: formik.values.username,
-      password: formik.values.password,
+      // password: formik.values.password,
+      password:encryptPassword(formik.values.password), // 🔐 Encrypted using AES-256-CBC
       moduleId: 14
     };
     console.log("--1--before login send...", requestBody);
