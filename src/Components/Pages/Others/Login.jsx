@@ -628,7 +628,7 @@ function Login() {
                             type="password"
                             defaultValue
                             required
-                            autoComplete="new-password"
+                            autoComplete="off"
                             onCopy={preventCopyPaste}
                             onCut={preventCopyPaste}
                             onPaste={preventCopyPaste}
