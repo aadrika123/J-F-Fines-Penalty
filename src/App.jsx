@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // 👉 Importing Packages 👈
-import "animate.css";
+// import "animate.css";
 import { useState, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
