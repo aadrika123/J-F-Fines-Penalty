@@ -23,12 +23,10 @@ import {
 import { contextVar } from "@/Components/context/contextVar";
 import { RxCross2 } from "react-icons/rx";
 import apk from "@/Components/assets/download.png";
-// import UseCaptchaGenerator from "@/hooks/UseCaptchaGenerator";
-
+import UseCaptchaGenerator from "@/hooks/UseCaptchaGenerator";
 import { useLocation } from 'react-router-dom';
 import { use } from "react";
 import CryptoJS from "crypto-js";
-import UseCaptchaGeneratorServer from "@/hooks/UseCaptchaGeneratorServer";
 const { api_login, api_getFreeMenuList } = ProjectApiList();
 
 
@@ -39,16 +37,7 @@ function Login() {
   const [loaderStatus, setLoaderStatus] = useState(false);
   const [manualDialogStatus, setmanualDialogStatus] = useState(false);
   const userManualModalRef = useRef();
-  // const { catptchaTextField, dataUrl, verifyCaptcha, newGeneratedCaptcha, captchaImage } = UseCaptchaGenerator();
-
-  const {
-    catptchaTextField,
-    captchaData,  // Contains captcha_id and captcha_code
-    captchaImage,
-    verifyCaptcha,
-    newGeneratedCaptcha,
-    loading
-  } = UseCaptchaGeneratorServer();
+  const { catptchaTextField, dataUrl, verifyCaptcha, newGeneratedCaptcha, captchaImage } = UseCaptchaGenerator();
   const modalRef = useRef();
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const location = useLocation();
@@ -232,10 +221,8 @@ function Login() {
     let requestBody = {
       email: formik.values.username,
       // password: formik.values.password,
-      password: encryptPassword(formik.values.password), // 🔐 Encrypted using AES-256-CBC
-      moduleId: 14,
-      captcha_id: captchaData.captcha_id,      // Add captcha_id
-      captcha_code: formik.values.captcha      // Send user's captcha input
+      password:encryptPassword(formik.values.password), // 🔐 Encrypted using AES-256-CBC
+      moduleId: 14
     };
     console.log("--1--before login send...", requestBody);
     AxiosInterceptors.post(api_login, requestBody, header)
@@ -675,30 +662,20 @@ function Login() {
                         </div> */}
                         <div className="mb-2">
                           <div className="flex justify-between items-center">
-                            <div className="rounded-sm">
-                              {loading ? (
-                                <div className="w-[200px] h-[60px] flex items-center justify-center bg-gray-200">
-                                  Loading...
-                                </div>
-                              ) : (
-                                <img src={captchaImage} alt="captcha" />
-                              )}
+                            <div className="   rounded-sm">
+                              <img src={captchaImage} />
                             </div>
                             <div>
-                              <button
-                                type="button"
-                                onClick={newGeneratedCaptcha}
-                                className="text-xs text-blue-400"
-                                disabled={loading}
-                              >
-                                Reload Captcha
-                              </button>
+                              <button type="button" onClick={newGeneratedCaptcha} className="text-xs text-blue-400">Reload Captcha</button>
                             </div>
                           </div>
+                          {/* <div className="mt-4">
+                            {catptchaTextField(formik)}
+                          </div> */}
                           <div className="mt-3">
                             <input
                               {...formik.getFieldProps("captcha")}
-                              className="w-full leading-5 py-1.5 px-3 rounded text-gray-800 bg-white border border-gray-300 focus:outline-none focus:border-gray-400"
+                              className="w-full leading-5 py-1.5 px-3 rounded text-gray-800 bg-white border border-gray-300 focus:outline-none focus:border-gray-400 darks:text-gray-300 darks:bg-gray-700 darks:border-gray-700"
                               type="text"
                               required
                               autoComplete="off"
@@ -709,11 +686,10 @@ function Login() {
                               onKeyDown={preventKeyboardShortcuts}
                             />
                             <span className="text-red-600 text-xs">
-                              {formik.touched.captcha && formik.errors.captcha
-                                ? formik.errors.captcha
-                                : null}
+                              {formik.touched.captcha && formik.errors.captcha ? formik.errors.captcha : null}
                             </span>
                           </div>
+
                         </div>
 
 

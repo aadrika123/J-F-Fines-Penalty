@@ -152,6 +152,9 @@ export default function ProjectApiList() {
         // ═════════════║ API TO GET SEND ONLINE PAYMENT RESPONSE ║══════════════════ 
         api_sendOnlineResponse: `${baseUrl}/api/fines/razorpay/save-response`,
 
+        //get captcha for login
+        api_getCaptcha: `${baseUrl}/api/login-Captcha`,
+
     //    -==================Citizen API List=========================
     api_enf_officer: `${baseUrl}/api/fines/user/enf-officer`,
     api_enf_cell: `${baseUrl}/api/fines/user/enf-officer`,
