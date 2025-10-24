@@ -3,6 +3,7 @@ import AxiosInterceptors from "@/Components/Common/AxiosInterceptors";
 import ApiHeader from "@/Components/api/ApiHeader";
 import { toast } from "react-hot-toast";
 import ProjectApiList from '@/Components/api/ProjectApiList';
+import { decryptPassword } from './useEncDecr';
 
 const UseCaptchaGeneratorServer = () => {
     const [captchaData, setCaptchaData] = useState({
@@ -11,27 +12,60 @@ const UseCaptchaGeneratorServer = () => {
     });
     const [captchaImage, setCaptchaImage] = useState("");
     const [loading, setLoading] = useState(false);
-    const {api_getCaptcha}=ProjectApiList();
+    const { api_getCaptcha } = ProjectApiList();
     // Fetch captcha from server
-   // Fetch captcha from server
-  const fetchCaptchaFromServer = async () => {
-    setLoading(true);
-    try {
-      const response = await AxiosInterceptors.post(api_getCaptcha, {}, ApiHeader());
-      if (response.data) {
-        setCaptchaData({
-          captcha_id: response.data.captcha_id,
-          captcha_code: response.data.captcha_code,
-        });
-        drawCaptcha(response.data.captcha_code); // draw on canvas
-      }
-    } catch (error) {
-      console.error('Error fetching captcha:', error);
-      toast.error('Failed to load captcha');
-    } finally {
-      setLoading(false);
-    }
-  };
+    // Fetch captcha from server
+
+
+
+
+    //   const fetchCaptchaFromServer = async () => {
+    //     setLoading(true);
+    //     try {
+    //       const response = await AxiosInterceptors.post(api_getCaptcha, {}, ApiHeader());
+    //       if (response.data) {
+    //         setCaptchaData({
+    //           captcha_id: response.data.captcha_id,
+    //           captcha_code: response.data.captcha_code,
+    //         });
+    //         drawCaptcha(response.data.captcha_code); // draw on canvas
+    //       }
+    //     } catch (error) {
+    //       console.error('Error fetching captcha:', error);
+    //       toast.error('Failed to load captcha');
+    //     } finally {
+    //       setLoading(false);
+    //     }
+    //   };
+    const fetchCaptchaFromServer = async () => {
+        setLoading(true);
+        try {
+            const response = await AxiosInterceptors.post(api_getCaptcha, {}, ApiHeader());
+
+            // Log for debugging
+            console.log('Captcha API Response:', response.data);
+
+            if (response.data?.status && response.data?.data) {
+                const { captcha_id, captcha_code } = response.data.data;
+console.log('Captcha Data:', captcha_id, captcha_code); // Debug log
+                setCaptchaData({
+                    captcha_id,
+                    captcha_code,
+                });
+                const descCaptcha = decryptPassword(captcha_code);
+               
+                drawCaptcha(descCaptcha);
+            } else {
+                toast.error('Invalid captcha response');
+            }
+        } catch (error) {
+            console.error('Error fetching captcha:', error);
+            toast.error('Failed to load captcha');
+        } finally {
+            setLoading(false);
+        }
+    };
+
 
     // Draw captcha on canvas
     const drawCaptcha = (captchaText) => {

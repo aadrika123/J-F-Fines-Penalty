@@ -106,8 +106,8 @@ function Login() {
     }),
     onSubmit: async (values, { resetForm }) => {
       setIsFormSubmitted(true);
-      const isvalidcaptcha = verifyCaptcha(values?.captcha, resetForm)
-      if (isvalidcaptcha) {
+      // const isvalidcaptcha = verifyCaptcha(values?.captcha, resetForm)
+      
         try {
           // Call your authentication function (authUser()) here
           // await authUser(values.username, values.password);
@@ -120,11 +120,8 @@ function Login() {
           console.error('Authentication failed:', error);
           setIsFormSubmitted(false); // Reset the form submission status on authentication failure
         }
-      }
-      else {
-        // alert("Invalid captcha")
-        toast.error('Invalid captcha');
-      }
+      
+      
 
     },
   });
@@ -235,7 +232,7 @@ function Login() {
       password: encryptPassword(formik.values.password), // 🔐 Encrypted using AES-256-CBC
       moduleId: 14,
       captcha_id: captchaData.captcha_id,      // Add captcha_id
-      captcha_code: formik.values.captcha      // Send user's captcha input
+      captcha_code: encryptPassword(formik.values.captcha)      // Send user's captcha input
     };
     console.log("--1--before login send...", requestBody);
     AxiosInterceptors.post(api_login, requestBody, header)
