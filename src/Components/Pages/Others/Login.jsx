@@ -1,37 +1,36 @@
-import { useState, useContext, useEffect, useRef } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { toast } from "react-hot-toast";
-import "./login.css";
-import { RotatingLines } from "react-loader-spinner";
-import ProjectApiList from "@/Components/api/ProjectApiList";
-import ApiHeader from "@/Components/api/ApiHeader";
-import img from "@/Components/assets/fp.png";
-import AxiosInterceptors from "@/Components/Common/AxiosInterceptors";
-import ReCAPTCHA from "react-google-recaptcha";
+import { useState, useContext, useEffect, useRef } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { toast } from 'react-hot-toast';
+import './login.css';
+import { RotatingLines } from 'react-loader-spinner';
+import ProjectApiList from '@/Components/api/ProjectApiList';
+import ApiHeader from '@/Components/api/ApiHeader';
+import img from '@/Components/assets/fp.png';
+import AxiosInterceptors from '@/Components/Common/AxiosInterceptors';
+import ReCAPTCHA from 'react-google-recaptcha';
 import {
   getLocalStorageItem,
   setLocalStorageItem,
   setLocalStorageItemStrigified,
-} from "@/Components/Common/localstorage";
-import ulb_data from "@/Components/Common/DynamicData";
+} from '@/Components/Common/localstorage';
+import ulb_data from '@/Components/Common/DynamicData';
 import {
   allowNumberInput,
   checkErrorMessage,
-} from "@/Components/Common/PowerupFunctions";
-import { contextVar } from "@/Components/context/contextVar";
-import { RxCross2 } from "react-icons/rx";
-import apk from "@/Components/assets/download.png";
+} from '@/Components/Common/PowerupFunctions';
+import { contextVar } from '@/Components/context/contextVar';
+import { RxCross2 } from 'react-icons/rx';
+import apk from '@/Components/assets/download.png';
 // import UseCaptchaGenerator from "@/hooks/UseCaptchaGenerator";
 
 import { useLocation } from 'react-router-dom';
-import { use } from "react";
-import CryptoJS from "crypto-js";
-import UseCaptchaGeneratorServer from "@/hooks/UseCaptchaGeneratorServer";
+import { use } from 'react';
+import CryptoJS from 'crypto-js';
+import UseCaptchaGeneratorServer from '@/hooks/UseCaptchaGeneratorServer';
+import useSystemUniqueID from '@/hooks/useSystemUniqleId';
 const { api_login, api_getFreeMenuList } = ProjectApiList();
-
-
 
 function Login() {
   const { setmenuList, setuserDetails, setheartBeatCounter } =
@@ -43,19 +42,22 @@ function Login() {
 
   const {
     catptchaTextField,
-    captchaData,  // Contains captcha_id and captcha_code
+    captchaData, // Contains captcha_id and captcha_code
     captchaImage,
     verifyCaptcha,
     newGeneratedCaptcha,
-    loading
+    loading,
   } = UseCaptchaGeneratorServer();
+
+  const { fingerprint } = useSystemUniqueID();
+
   const modalRef = useRef();
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const message = searchParams.get('msg') || '';
 
-  console.log(location.pathname, "location")
+  console.log(location.pathname, 'location');
 
   const preventCopyPaste = (e) => {
     e.preventDefault();
@@ -71,7 +73,8 @@ function Login() {
   };
 
   function encryptPassword(plainPassword) {
-    const secretKey = "c2ec6f788fb85720bf48c8cc7c2db572596c585a15df18583e1234f147b1c2897aad12e7bebbc4c03c765d0e878427ba6370439d38f39340d7e";
+    const secretKey =
+      'c2ec6f788fb85720bf48c8cc7c2db572596c585a15df18583e1234f147b1c2897aad12e7bebbc4c03c765d0e878427ba6370439d38f39340d7e';
 
     // Match PHP's binary hash key
     const key = CryptoJS.enc.Latin1.parse(
@@ -107,35 +110,25 @@ function Login() {
     onSubmit: async (values, { resetForm }) => {
       setIsFormSubmitted(true);
       // const isvalidcaptcha = verifyCaptcha(values?.captcha, resetForm)
-      
-        try {
-          // Call your authentication function (authUser()) here
-          // await authUser(values.username, values.password);
-          await authUser(values.username, encryptPassword(values.password));
-          console.log('Form submitted:', values);
-          setIsFormSubmitted(false);
 
-        } catch (error) {
-          // Handle authentication error if needed
-          console.error('Authentication failed:', error);
-          setIsFormSubmitted(false); // Reset the form submission status on authentication failure
-        }
-      
-      
-
+      try {
+        // Call your authentication function (authUser()) here
+        // await authUser(values.username, values.password);
+        await authUser(values.username, encryptPassword(values.password));
+        console.log('Form submitted:', values);
+        setIsFormSubmitted(false);
+      } catch (error) {
+        // Handle authentication error if needed
+        console.error('Authentication failed:', error);
+        setIsFormSubmitted(false); // Reset the form submission status on authentication failure
+      }
     },
   });
 
-
-
-
-
-
-
   const formik2 = useFormik({
     initialValues: {
-      email: "",
-      mobile: "",
+      email: '',
+      mobile: '',
     },
     onSubmit: (values) => {
       console.log(values);
@@ -143,8 +136,8 @@ function Login() {
     },
     validationSchema: Yup.object().shape({
       email: Yup.string().test(
-        "email-or-mobile",
-        "Please provide an email or mobile number",
+        'email-or-mobile',
+        'Please provide an email or mobile number',
         function (value) {
           const { mobile } = this.parent; // Access the 'mobile' field
 
@@ -156,8 +149,8 @@ function Login() {
         }
       ),
       mobile: Yup.string().test(
-        "email-or-mobile",
-        "Please provide an email or mobile number",
+        'email-or-mobile',
+        'Please provide an email or mobile number',
         function (value) {
           const { email } = this.parent; // Access the 'email' field
 
@@ -177,49 +170,49 @@ function Login() {
       mobileNo: values?.mobile,
       email: values?.email,
     };
-    console.log("--1--before reset send...", requestBody);
+    console.log('--1--before reset send...', requestBody);
     axios
-      .post("", requestBody, header)
+      .post('', requestBody, header)
       .then(function (response) {
-        console.log("reset password response => ", response.data);
+        console.log('reset password response => ', response.data);
         // return
         if (response.data.status == true) {
           toast.success(response?.data?.message);
           modalRef.current.close();
           formik2.resetForm();
         } else {
-          console.log("false...");
+          console.log('false...');
           setLoaderStatus(false);
           toast.error(response?.data?.message);
         }
       })
       .catch(function (error) {
         setLoaderStatus(false);
-        console.log("reset password error => ", error);
-        toast.error("Server Error");
+        console.log('reset password error => ', error);
+        toast.error('Server Error');
       });
   };
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (location.pathname == "/transfer") {
-      window.localStorage.clear()
-      navigate("/");
+    if (location.pathname == '/transfer') {
+      window.localStorage.clear();
+      navigate('/');
     } else {
-      getLocalStorageItem("token") != "null" &&
-        getLocalStorageItem("token") != null &&
-        navigate("/home");
+      getLocalStorageItem('token') != 'null' &&
+        getLocalStorageItem('token') != null &&
+        navigate('/home');
     }
   }, []);
 
-  const labelStyle = "text-gray-800 text-sm";
+  const labelStyle = 'text-gray-800 text-sm';
   const inputStyle =
-    "border focus:outline-none drop-shadow-sm focus:drop-shadow-md px-4 py-1 text-gray-700 shadow-black placeholder:text-sm";
+    'border focus:outline-none drop-shadow-sm focus:drop-shadow-md px-4 py-1 text-gray-700 shadow-black placeholder:text-sm';
 
   const header = {
     headers: {
-      Accept: "application/json",
+      Accept: 'application/json',
     },
   };
 
@@ -231,18 +224,20 @@ function Login() {
       // password: formik.values.password,
       password: encryptPassword(formik.values.password), // 🔐 Encrypted using AES-256-CBC
       moduleId: 14,
-      captcha_id: captchaData.captcha_id,      // Add captcha_id
-      captcha_code: encryptPassword(formik.values.captcha)      // Send user's captcha input
+      captcha_id: captchaData.captcha_id, // Add captcha_id
+      captcha_code: encryptPassword(formik.values.captcha),
+      systemUniqueId: fingerprint,
+      // Send user's captcha input
     };
-    console.log("--1--before login send...", requestBody);
+    console.log('--1--before login send...', requestBody);
     AxiosInterceptors.post(api_login, requestBody, header)
       .then(function (response) {
-        console.log("message check login ", response.data);
+        console.log('message check login ', response.data);
         // return
         if (response.data.status == true) {
-          setLocalStorageItem("token", response?.data?.data?.token);
+          setLocalStorageItem('token', response?.data?.data?.token);
           setLocalStorageItemStrigified(
-            "userDetails",
+            'userDetails',
             response?.data?.data?.userDetails
           );
           formik.resetForm();
@@ -337,9 +332,9 @@ function Login() {
           setheartBeatCounter((prev) => prev + 1);
           // navigate("/home"); //navigate to home page after login
           // window.location.href = '/fines/home';
-          toast.success("Login Successfull");
+          toast.success('Login Successfull');
         } else {
-          console.log("false...");
+          console.log('false...');
           setLoaderStatus(false);
           toast.error(response?.data?.message);
           newGeneratedCaptcha();
@@ -348,8 +343,8 @@ function Login() {
       })
       .catch(function (error) {
         setLoaderStatus(false);
-        console.log("--2--login error...", error);
-        toast.error("Server Error");
+        console.log('--2--login error...', error);
+        toast.error('Server Error');
         newGeneratedCaptcha();
         formik?.setFieldValue('captcha', '');
       });
@@ -360,25 +355,28 @@ function Login() {
     let requestBody = {
       moduleId: 14,
     };
-    console.log("request body", requestBody);
+    console.log('request body', requestBody);
 
     AxiosInterceptors.post(api_getFreeMenuList, requestBody, ApiHeader())
       .then(function (response) {
         console.log(
-          "fetched menu list.....",
+          'fetched menu list.....',
           response?.data?.data?.userDetails?.roles
         );
         // return
         if (response.data.status == true) {
           // setLocalStorageItemStrigified('menuList', response?.data?.data?.permission)
           // setLocalStorageItemStrigified('userDetails', response?.data?.data?.userDetails)
-          console.log("nbvdvbjdb", response?.data?.data?.permission)
+          console.log('nbvdvbjdb', response?.data?.data?.permission);
           setmenuList(response?.data?.data?.permission);
           setuserDetails(response?.data?.data?.userDetails);
-          setLocalStorageItemStrigified("menuList", response?.data?.data?.permission)
-          window.location.href = "/fines/home"
+          setLocalStorageItemStrigified(
+            'menuList',
+            response?.data?.data?.permission
+          );
+          window.location.href = '/fines/home';
         } else {
-          console.log("false menu list => ", response?.data?.message);
+          console.log('false menu list => ', response?.data?.message);
           setLoaderStatus(false);
           seterrorMsg(checkErrorMessage(response.data.message));
         }
@@ -386,7 +384,7 @@ function Login() {
       .catch(function (error) {
         setLoaderStatus(false);
         // seterroState(true)
-        console.log("--2--login error...", error);
+        console.log('--2--login error...', error);
       });
   };
 
@@ -394,17 +392,17 @@ function Login() {
     let name = e.target.name;
     let value = e.target.value;
 
-    console.log("first", name);
+    console.log('first', name);
 
-    if (name == "email") {
-      formik2.setFieldValue("mobile", "");
-      formik2.setFieldValue("email", value);
+    if (name == 'email') {
+      formik2.setFieldValue('mobile', '');
+      formik2.setFieldValue('email', value);
     }
 
-    if (name == "mobile") {
-      formik2.setFieldValue("email", "");
+    if (name == 'mobile') {
+      formik2.setFieldValue('email', '');
       formik2.setFieldValue(
-        "mobile",
+        'mobile',
         allowNumberInput(value, formik2?.values.mobile, 10)
       );
     }
@@ -424,7 +422,6 @@ function Login() {
       }
     }
   }, [manualDialogStatus]);
-
 
   return (
     <>
@@ -450,7 +447,6 @@ function Login() {
                 Download User Manual
               </h1>
               <div className="container p-10 mx-auto grid grid-cols-12 space-x-2">
-
                 <div className="col-span-12 md:col-span-3 gap-4 mt-6 xl:mt-12 xl:gap-12 md:grid-cols-2 lg:grid-cols-3">
                   <div className="w-full p-8 space-y-8 text-center border border-gray-200 rounded-lg bg-gray-200">
                     <p className="font-medium text-gray-500 uppercase ">
@@ -520,11 +516,16 @@ function Login() {
             {/* logo */}
             <a className="flex items-center py-2 ltr:mr-4 rtl:ml-4 text-xl cursor-default">
               <div className="flex gap-2">
-                {" "}
+                {' '}
                 <span className="w-9">
                   {/* <img src={ulb_data()?.ulb_logo} alt="" srcset="" className="" /> */}
-                  <img src="https://res.cloudinary.com/djkewhhqs/image/upload/v1708507605/JUIDCO_IMAGE/Juidco%20svg%20file/Fines_y6gbu1.svg" alt="" srcset="" className="" />
-                </span>{" "}
+                  <img
+                    src="https://res.cloudinary.com/djkewhhqs/image/upload/v1708507605/JUIDCO_IMAGE/Juidco%20svg%20file/Fines_y6gbu1.svg"
+                    alt=""
+                    srcset=""
+                    className=""
+                  />
+                </span>{' '}
                 <span className="font-bold text-xl uppercase">
                   Login - Fines & Penalties Management System
                 </span>
@@ -572,16 +573,17 @@ function Login() {
         </div>
       </header>
       {message && (
-        <div className='w-full h-6 bg-red-600 flex justify-center items-center text-white text-lg p-3'><span className='font-semibold'>⚠️ Permission Denied</span> - {message}</div>
+        <div className="w-full h-6 bg-red-600 flex justify-center items-center text-white text-lg p-3">
+          <span className="font-semibold">⚠️ Permission Denied</span> -{' '}
+          {message}
+        </div>
       )}
       <main className=" bg-gray-100 flex justify-center items-center md:h-[78vh]">
-
         <div className="pt-8 bg-gray-100 darks:bg-gray-900 darks:bg-opacity-40">
           <div className="mx-auto px-4 ">
             <div className="flex flex-wrap flex-row justify-center gap-2 items-center">
               <div className=" px-4 w-full md:w-[40%] 2xl:w-[30%]">
                 {/* login form */}
-
 
                 <div className="max-w-full w-full px-2 sm:px-12 lg:px-0 lg:pr-20 mb-10 lg:mb-0">
                   <div className="relative">
@@ -601,7 +603,7 @@ function Login() {
                             E-mail
                           </label>
                           <input
-                            {...formik.getFieldProps("username")}
+                            {...formik.getFieldProps('username')}
                             className="w-full leading-5 relative py-2 px-4 rounded text-gray-800 bg-white border border-gray-300 overflow-x-auto focus:outline-none focus:border-gray-400 focus:ring-0 darks:text-gray-300 darks:bg-gray-700 darks:border-gray-700 darks:focus:border-gray-600"
                             defaultValue
                             aria-label="email"
@@ -632,7 +634,7 @@ function Login() {
                             </div>
                           </div>
                           <input
-                            {...formik.getFieldProps("password")}
+                            {...formik.getFieldProps('password')}
                             className="w-full leading-5 relative py-2 px-4 rounded text-gray-800 bg-white border border-gray-300 overflow-x-auto focus:outline-none focus:border-gray-400 focus:ring-0 darks:text-gray-300 darks:bg-gray-700 darks:border-gray-700 darks:focus:border-gray-600"
                             aria-label="password"
                             type="password"
@@ -694,7 +696,7 @@ function Login() {
                           </div>
                           <div className="mt-3">
                             <input
-                              {...formik.getFieldProps("captcha")}
+                              {...formik.getFieldProps('captcha')}
                               className="w-full leading-5 py-1.5 px-3 rounded text-gray-800 bg-white border border-gray-300 focus:outline-none focus:border-gray-400"
                               type="text"
                               required
@@ -712,10 +714,6 @@ function Login() {
                             </span>
                           </div>
                         </div>
-
-
-
-
 
                         <div className="grid">
                           {loaderStatus ? (
@@ -751,7 +749,7 @@ function Login() {
                               Login
                             </button>
                           )}
-                          {/* 
+                          {/*
                           <div
                             onClick={() => modalRef.current.showModal()}
                             className="select-none py-4 text-center font-semibold hover:text-blue-600 hover:underline cursor-pointer"
@@ -790,22 +788,33 @@ function Login() {
               <div className="flex-shrink max-w-full px-4 w-full md:w-1/2 text-center md:ltr:text-left md:rtl:text-right">
                 <ul className="ltr:pl-0 rtl:pr-0 space-x-4">
                   <li className="inline-block ltr:mr-3 rtl:ml-3">
-                    <a className="hover:text-indigo-500" href="#">Support |</a>
+                    <a className="hover:text-indigo-500" href="#">
+                      Support |
+                    </a>
                   </li>
                   <li className="inline-block ltr:mr-3 rtl:ml-3">
-                    <a className="hover:text-indigo-500" href="#">Help Center |</a>
+                    <a className="hover:text-indigo-500" href="#">
+                      Help Center |
+                    </a>
                   </li>
                   <li className="inline-block ltr:mr-3 rtl:ml-3">
-                    <a className="hover:text-indigo-500" href="#">Privacy |</a>
+                    <a className="hover:text-indigo-500" href="#">
+                      Privacy |
+                    </a>
                   </li>
                   <li className="inline-block ltr:mr-3 rtl:ml-3">
-                    <a className="hover:text-indigo-500" href="#">Terms of Service</a>
+                    <a className="hover:text-indigo-500" href="#">
+                      Terms of Service
+                    </a>
                   </li>
                 </ul>
               </div>
               <div className="flex-shrink max-w-full px-4 w-full md:w-1/2 text-center md:ltr:text-right md:rtl:text-left">
                 <p className="mb-0 mt-3 md:mt-0">
-                  <a href="#" className="hover:text-indigo-500">UD&HD</a> | All right reserved
+                  <a href="#" className="hover:text-indigo-500">
+                    UD&HD
+                  </a>{' '}
+                  | All right reserved
                 </p>
               </div>
             </div>
@@ -837,18 +846,19 @@ function Login() {
               </h1>
             </div>
             <div className=" flex flex-col">
-              <label htmlFor={"email"} className={labelStyle}>
-                E-mail :{" "}
+              <label htmlFor={'email'} className={labelStyle}>
+                E-mail :{' '}
               </label>
               <input
-                {...formik.getFieldProps("email")}
+                {...formik.getFieldProps('email')}
                 value={formik2.values.email}
-                type={"text"}
+                type={'text'}
                 className={
                   inputStyle +
-                  ` ${formik2.touched?.email && formik2.errors?.email
-                    ? " border-red-200 placeholder:text-red-400 "
-                    : " focus:border-zinc-300 border-zinc-200"
+                  ` ${
+                    formik2.touched?.email && formik2.errors?.email
+                      ? ' border-red-200 placeholder:text-red-400 '
+                      : ' focus:border-zinc-300 border-zinc-200'
                   }`
                 }
                 name="email"
@@ -858,18 +868,19 @@ function Login() {
             </div>
             <div className="my-4 text-center font-semibold ">OR</div>
             <div className=" flex flex-col mb-6">
-              <label htmlFor={"mobile"} className={labelStyle}>
-                Mobile No. :{" "}
+              <label htmlFor={'mobile'} className={labelStyle}>
+                Mobile No. :{' '}
               </label>
               <input
-                {...formik.getFieldProps("mobile")}
+                {...formik.getFieldProps('mobile')}
                 value={formik2.values.mobile}
-                type={"text"}
+                type={'text'}
                 className={
                   inputStyle +
-                  ` ${formik2.touched?.mobile && formik2.errors?.mobile
-                    ? " border-red-200 placeholder:text-red-400 "
-                    : " focus:border-zinc-300 border-zinc-200"
+                  ` ${
+                    formik2.touched?.mobile && formik2.errors?.mobile
+                      ? ' border-red-200 placeholder:text-red-400 '
+                      : ' focus:border-zinc-300 border-zinc-200'
                   }`
                 }
                 name="mobile"
