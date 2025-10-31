@@ -22,6 +22,7 @@ import {
 } from '@/Components/Common/PowerupFunctions';
 import { contextVar } from '@/Components/context/contextVar';
 import { RxCross2 } from 'react-icons/rx';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import apk from '@/Components/assets/download.png';
 // import UseCaptchaGenerator from "@/hooks/UseCaptchaGenerator";
 
@@ -37,6 +38,7 @@ function Login() {
     useContext(contextVar);
   const [loaderStatus, setLoaderStatus] = useState(false);
   const [manualDialogStatus, setmanualDialogStatus] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const userManualModalRef = useRef();
   // const { catptchaTextField, dataUrl, verifyCaptcha, newGeneratedCaptcha, captchaImage } = UseCaptchaGenerator();
 
@@ -633,20 +635,29 @@ function Login() {
                               </label>
                             </div>
                           </div>
-                          <input
-                            {...formik.getFieldProps('password')}
-                            className="w-full leading-5 relative py-2 px-4 rounded text-gray-800 bg-white border border-gray-300 overflow-x-auto focus:outline-none focus:border-gray-400 focus:ring-0 darks:text-gray-300 darks:bg-gray-700 darks:border-gray-700 darks:focus:border-gray-600"
-                            aria-label="password"
-                            type="password"
-                            defaultValue
-                            required
-                            autoComplete="off"
-                            onCopy={preventCopyPaste}
-                            onCut={preventCopyPaste}
-                            onPaste={preventCopyPaste}
-                            onContextMenu={preventCopyPaste}
-                            onKeyDown={preventKeyboardShortcuts}
-                          />
+                          <div className="relative">
+                            <input
+                              {...formik.getFieldProps('password')}
+                              className="w-full leading-5 relative py-2 px-4 pr-12 rounded text-gray-800 bg-white border border-gray-300 overflow-x-auto focus:outline-none focus:border-gray-400 focus:ring-0 darks:text-gray-300 darks:bg-gray-700 darks:border-gray-700 darks:focus:border-gray-600"
+                              aria-label="password"
+                              type={showPassword ? "text" : "password"}
+                              defaultValue
+                              required
+                              autoComplete="off"
+                              onCopy={preventCopyPaste}
+                              onCut={preventCopyPaste}
+                              onPaste={preventCopyPaste}
+                              onContextMenu={preventCopyPaste}
+                              onKeyDown={preventKeyboardShortcuts}
+                            />
+                            <button
+                              type="button"
+                              onClick={() => setShowPassword(!showPassword)}
+                              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                            >
+                              {showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
+                            </button>
+                          </div>
                           <span className="text-red-600 text-xs">
                             {formik.touched.password && formik.errors.password
                               ? formik.errors.password
