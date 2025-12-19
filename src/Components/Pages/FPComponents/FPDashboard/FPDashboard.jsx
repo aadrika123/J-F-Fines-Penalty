@@ -85,7 +85,6 @@ function FPDashboard() {
                 allRole={userDetails}
                 heading={"Fines & Penalties Home Page"}
                 subHeading={"Verified Account"}
-                changePasswordLink={'/change-password'}
                 mainWorkflowLink={'/fp-workflow'}
                 // applyLink={'/fp-apply'}
             />
