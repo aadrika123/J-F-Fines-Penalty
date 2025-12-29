@@ -185,7 +185,7 @@ const TopHeader = () => {
                   <div className="py-2">
                     <button
                       onClick={() =>
-                        window.location.replace("/settings/dashboard/home")
+                     window.open("/settings/dashboard/home", "_blank")
                       }
                       className="w-full px-4 py-3 flex items-center space-x-3 hover:bg-blue-50 transition-colors duration-150 text-left"
                     >
@@ -200,9 +200,7 @@ const TopHeader = () => {
 
                     <button
                       onClick={() =>
-                        window.location.replace(
-                          "/settings/dashboard/change-password"
-                        )
+                         window.open("/settings/dashboard/change-password", "_blank" )
                       }
                       className="w-full px-4 py-3 flex items-center space-x-3 hover:bg-blue-50 transition-colors duration-150 text-left border-t border-gray-100"
                     >
@@ -219,9 +217,7 @@ const TopHeader = () => {
 
                     <button
                       onClick={() =>
-                        window.location.replace(
-                          "/settings/dashboard/notification"
-                        )
+                        window.open("/settings/dashboard/notification","_blank" )
                       }
                       className="w-full px-4 py-3 flex items-center space-x-3 hover:bg-blue-50 transition-colors duration-150 text-left border-t border-gray-100"
                     >
